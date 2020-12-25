@@ -60,7 +60,7 @@ public:
         cout << "成功还书！";
         return true;
     }
-    bool operator<(Book &another) //重载小于运算符，实现基于标题的比较大小
+    bool operator<(const Book &another) const //重载小于运算符，实现基于标题的比较大小
     {
         return this->title < another.title;
     }
@@ -103,7 +103,7 @@ public:
         cout << "找到" << candidate.size() << "个序号符合的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << ' 出版物号 ISBN/ISSN：' << bookList[candidate[i]].num << '\n';
+            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
@@ -136,7 +136,7 @@ public:
         cout << "找到" << candidate.size() << "个书名匹配的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << ' 出版物号 ISBN/ISSN：' << bookList[candidate[i]].num << '\n';
+            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
@@ -148,17 +148,17 @@ public:
             cout << "请输入想借阅的书籍序号: ";
             int temp;
             cin >> temp;
-            return candidate[temp - 1];//这个才是真正的书籍序号
+            return candidate[temp - 1]; //这个才是真正的书籍序号
         }
     }
     int searchAuthor(string target, bool mode) //图书搜索功能3：作者。作者名必须精确匹配。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
-        vector<pair<Book,int>> candidate; //这个vector用于保存符合条件的书籍
+        vector<pair<Book, int>> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookCount; i++)
         {
-            if (bookList[i].author==target)
+            if (bookList[i].author == target)
             {
-                candidate.push_back(pair<Book,int>(bookList[i],i));
+                candidate.push_back(pair<Book, int>(bookList[i], i));
             }
         }
         sort(candidate.begin(), candidate.end()); //运算符重载过啦，根据名称排序
@@ -170,7 +170,7 @@ public:
         cout << "找到" << candidate.size() << "个该作者出版的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << candidate[i].first.title << ' 出版物号 ISBN/ISSN：' << candidate[i].first.num << '\n';
+            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
         }
         if (mode == 0)
         {
@@ -182,7 +182,7 @@ public:
             cout << "请输入想借阅的书籍序号: ";
             int temp;
             cin >> temp;
-            return candidate[temp-1].second;
+            return candidate[temp - 1].second;
         }
     }
 };
