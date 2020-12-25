@@ -1,19 +1,23 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include<vector>
+#include<algorithm>
+#include<iomanip>
 using namespace std;
+bool kmp(string a, string b);
 class Book
 {
 private:
     bool borrowed; //是否被借走了
 public:
+    string title;            //题名
+    bool serial;             //是否为连续出版物(ISSN)
+    string num;              //ISBN/ISSN
+    string author;           //作者
+    string cat1, cat2, cat3; //三级分类
     void setBook(const int bookCount)
     {
-        string title;            //题名
-        bool serial;             //是否为连续出版物(ISSN)
-        string num;              //ISBN/ISSN
-        string author;           //作者
-        string cat1, cat2, cat3; //三级分类
         cout << "您正在录入第" << bookCount << "本图书的信息。\n";
         cout << "题目: ";
         cin >> title;
@@ -60,19 +64,40 @@ public:
 class repo //书库
 {
 private:
-    Book bookList[10000]; //暂时使用数组实现，试试啥时候能用链表
+    Book *bookList; //暂时使用数组实现，试试啥时候能用链表
     int bookCount = 0;
 
 public:
-    repo() {}
-    void addBook() //增加图书功能
+    repo()
+    {
+        bookList = new Book[100000];
+    }
+    void add() //增加图书功能
     {
         bookList[bookCount].setBook(bookCount);
         bookCount++;
     }
-    void modBook(int num) //修改图书功能
+    void modify(int num) //修改图书功能，num为图书序号
     {
         bookList[bookCount].setBook(bookCount);
+    }
+    void searchISBN(string target) //图书搜索功能1：ISBN/ISSN
+    {
+        vector<int> candidate;//这个vector用于保存符合条件的书籍
+        for (int i = 0; i < bookCount; i++)
+        {
+            if (kmp(bookList[i].num,target))
+            {
+                candidate.push_back(i);
+            }
+        }
+        sort(candidate.begin(),candidate.end());
+        cout<<"找到"<<candidate.size()<<"个序号符合的书籍，列表如下：\n";
+        for(int i=0;i<candidate.size();i++)
+        {
+            cout<<fixed<<setw(16)<<left<<"书名："<<bookList[candidate[i]].title<<' 出版物号 ISBN/ISSN：'<<bookList[candidate[i]].num<<'\n';
+        }
+        cout<<"请从上面的列表里查阅您想找到的书籍。\n";
     }
 };
 class account
@@ -87,4 +112,33 @@ class admin : public account
 int main()
 {
     return 0;
+}
+bool kmp(string a, string b)
+{
+    int lena = a.length(), lenb = b.length(), startPos = 0, searchPos = 0;
+    if (lena > lenb)
+    {
+        cout << "错误:请输入搜索对象的全部或一部分。";
+        return false;
+    }
+    if (a == b)
+    {
+        return true;
+    }
+    for (startPos = 0; startPos <= lenb - lena; startPos++)
+    {
+        for (searchPos = 0; searchPos < lena; searchPos++)
+        {
+            if (a[searchPos] != b[startPos + searchPos])
+            {
+                startPos += searchPos;
+                break;
+            }
+        }
+        if (searchPos == lena)
+        {
+            return true;
+        }
+    }
+    return false;
 }
