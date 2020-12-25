@@ -1,9 +1,9 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
-#include<vector>
-#include<algorithm>
-#include<iomanip>
+#include <vector>
+#include <algorithm>
+#include <iomanip>
 using namespace std;
 bool kmp(string a, string b);
 class Book
@@ -60,6 +60,10 @@ public:
         cout << "成功还书！";
         return true;
     }
+    bool operator<(Book &another) //重载小于运算符，实现基于标题的比较大小
+    {
+        return this->title < another.title;
+    }
 };
 class repo //书库
 {
@@ -81,23 +85,105 @@ public:
     {
         bookList[bookCount].setBook(bookCount);
     }
-    void searchISBN(string target) //图书搜索功能1：ISBN/ISSN
+    int searchISBN(string target, bool mode) //图书搜索功能1：ISBN/ISSN。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
-        vector<int> candidate;//这个vector用于保存符合条件的书籍
+        vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookCount; i++)
         {
-            if (kmp(bookList[i].num,target))
+            if (kmp(bookList[i].num, target))
             {
                 candidate.push_back(i);
             }
         }
-        sort(candidate.begin(),candidate.end());
-        cout<<"找到"<<candidate.size()<<"个序号符合的书籍，列表如下：\n";
-        for(int i=0;i<candidate.size();i++)
+        if (candidate.size() == 0)
         {
-            cout<<fixed<<setw(16)<<left<<"书名："<<bookList[candidate[i]].title<<' 出版物号 ISBN/ISSN：'<<bookList[candidate[i]].num<<'\n';
+            cout << "没有找到匹配此ISBN/ISSN的书籍。\n";
+            return -1;
         }
-        cout<<"请从上面的列表里查阅您想找到的书籍。\n";
+        cout << "找到" << candidate.size() << "个序号符合的书籍，列表如下：\n";
+        for (int i = 0; i < candidate.size(); i++)
+        {
+            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << ' 出版物号 ISBN/ISSN：' << bookList[candidate[i]].num << '\n';
+        }
+        if (mode == 0)
+        {
+            cout << "请从上面的列表里查阅您想找到的书籍。\n";
+            return 0;
+        }
+        if (mode == 1)
+        {
+            cout << "请输入想借阅的书籍序号: ";
+            int temp;
+            cin >> temp;
+            return candidate[temp - 1];
+        }
+    }
+    int searchTitle(string target, bool mode) //图书搜索功能2：标题。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
+    {
+        vector<int> candidate; //这个vector用于保存符合条件的书籍
+        for (int i = 0; i < bookCount; i++)
+        {
+            if (kmp(bookList[i].title, target))
+            {
+                candidate.push_back(i);
+            }
+        }
+        if (candidate.size() == 0)
+        {
+            cout << "没有找到匹配此书名的书籍。\n";
+            return -1;
+        }
+        cout << "找到" << candidate.size() << "个书名匹配的书籍，列表如下：\n";
+        for (int i = 0; i < candidate.size(); i++)
+        {
+            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << ' 出版物号 ISBN/ISSN：' << bookList[candidate[i]].num << '\n';
+        }
+        if (mode == 0)
+        {
+            cout << "请从上面的列表里查阅您想找到的书籍。\n";
+            return 0;
+        }
+        if (mode == 1)
+        {
+            cout << "请输入想借阅的书籍序号: ";
+            int temp;
+            cin >> temp;
+            return candidate[temp - 1];//这个才是真正的书籍序号
+        }
+    }
+    int searchAuthor(string target, bool mode) //图书搜索功能3：作者。作者名必须精确匹配。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
+    {
+        vector<pair<Book,int>> candidate; //这个vector用于保存符合条件的书籍
+        for (int i = 0; i < bookCount; i++)
+        {
+            if (bookList[i].author==target)
+            {
+                candidate.push_back(pair<Book,int>(bookList[i],i));
+            }
+        }
+        sort(candidate.begin(), candidate.end()); //运算符重载过啦，根据名称排序
+        if (candidate.size() == 0)
+        {
+            cout << "没有找到由此作者撰写的书籍。\n";
+            return -1;
+        }
+        cout << "找到" << candidate.size() << "个该作者出版的书籍，列表如下：\n";
+        for (int i = 0; i < candidate.size(); i++)
+        {
+            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << candidate[i].first.title << ' 出版物号 ISBN/ISSN：' << candidate[i].first.num << '\n';
+        }
+        if (mode == 0)
+        {
+            cout << "请从上面的列表里查阅您想找到的书籍。\n";
+            return 0;
+        }
+        if (mode == 1)
+        {
+            cout << "请输入想借阅的书籍序号: ";
+            int temp;
+            cin >> temp;
+            return candidate[temp-1].second;
+        }
     }
 };
 class account
@@ -118,7 +204,7 @@ bool kmp(string a, string b)
     int lena = a.length(), lenb = b.length(), startPos = 0, searchPos = 0;
     if (lena > lenb)
     {
-        cout << "错误:请输入搜索对象的全部或一部分。";
+        cout << "错误:请输入搜索对象的全部或一部分。\n";
         return false;
     }
     if (a == b)
