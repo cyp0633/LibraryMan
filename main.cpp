@@ -11,12 +11,12 @@ class Book
 private:
     bool borrowed; //是否被借走了
 public:
-    string title;            //题名
-    bool serial;             //是否为连续出版物(ISSN)
-    string num;              //ISBN/ISSN
-    string author;           //作者
-    string cat1, cat2, cat3; //三级分类
-    void setBook(const int bookCount)
+    string title;    //题名
+    bool serial;     //是否为连续出版物(ISSN)
+    string num;      //ISBN/ISSN
+    string author;   //作者
+    string category; //三级分类
+    void setBook_manual(const int bookCount)
     {
         cout << "您正在录入第" << bookCount << "本图书的信息。\n";
         cout << "题目: ";
@@ -33,8 +33,8 @@ public:
         }
         cout << "作者: ";
         cin >> author;
-        cout << "三级分类(由空格分隔，1级 2级 3级): ";
-        cin >> cat1 >> cat2 >> cat3;
+        cout << "三级分类(如A751/6 1): ";
+        getline(cin, category);
         borrowed = false;
         return;
     }
@@ -78,12 +78,12 @@ public:
     }
     void add() //增加图书功能
     {
-        bookList[bookCount].setBook(bookCount);
+        bookList[bookCount].setBook_manual(bookCount);
         bookCount++;
     }
     void modify(int num) //修改图书功能，num为图书序号
     {
-        bookList[bookCount].setBook(bookCount);
+        bookList[bookCount].setBook_manual(bookCount);
     }
     int searchISBN(string target, bool mode) //图书搜索功能1：ISBN/ISSN。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
@@ -183,6 +183,76 @@ public:
             int temp;
             cin >> temp;
             return candidate[temp - 1].second;
+        }
+    }
+    int searchCategory(string target, bool mode) //根据类别的搜索功能。
+    {
+        vector<pair<Book, int>> candidate;
+        for (int i = 0; i < bookCount; i++)
+        {
+            if (kmp(bookList[i].category, target))
+            {
+                candidate.push_back(pair<Book, int>(bookList[i], i));
+            }
+        }
+        if (candidate.size() == 0)
+        {
+            cout << "书库中没有您想找到的分类。\n";
+        }
+        sort(candidate.begin(), candidate.end());
+        cout << "找到了符合该分类的" << candidate.size() << "本书。\n";
+        int i;
+        for (i = 0; i * 30 < candidate.size(); i++)
+        {
+            cout << "第" << i * 30 + 1 << ' - ' << (i + 1) * 30 << "本:\n";
+            for (int j = i * 30; j <= (i + 1) * 30; j++)
+            {
+                cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+            }
+            if (mode == 1)
+            {
+                cout << "请输入您要查阅的书籍序号。如未找到，请输入-1，翻阅下一页:";
+                int temp;
+                cin >> temp;
+                if (temp != -1)
+                {
+                    return candidate[temp].second; //返回书籍的真正序号
+                }
+            }
+            else
+            {
+                cout << "如果您未找到您要找的书，请输入-1；如果找到，请输入1:";
+                int temp;
+                cin >> temp;
+                if (temp == -1)
+                {
+                    return 0;
+                }
+            }
+        }
+        for (int j = (i - 1) * 30; j < candidate.size(); j++)
+        {
+            cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+        }
+        if (mode == 1)
+        {
+            cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出";
+            int temp;
+            cin >> temp;
+            if (temp != -1)
+            {
+                return candidate[temp].second; //返回书籍的真正序号
+            }
+        }
+        else
+        {
+            cout << "如果您未找到您要找的书，请输入-1以退出；如果找到，请输入1:";
+            int temp;
+            cin >> temp;
+            if (temp == -1)
+            {
+                return 0;
+            }
         }
     }
 };
