@@ -75,6 +75,12 @@ public:
     repo()
     {
         bookList = new Book[100000];
+        return;
+    }
+    ~repo()
+    {
+        delete bookList;
+        return;
     }
     void add() //增加图书功能
     {
@@ -269,7 +275,7 @@ int main()
 {
     return 0;
 }
-bool kmp(string a, string b)
+bool kmp(string a, string b)//KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
 {
     int lena = a.length(), lenb = b.length(), startPos = 0, searchPos = 0;
     if (lena > lenb)
