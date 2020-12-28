@@ -159,7 +159,7 @@ public:
     }
     int searchAuthor(string target, bool mode) //图书搜索功能3：作者。作者名必须精确匹配。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
-        vector<pair<Book, int>> candidate; //这个vector用于保存符合条件的书籍
+        vector< pair<Book, int> > candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookCount; i++)
         {
             if (bookList[i].author == target)
@@ -193,7 +193,7 @@ public:
     }
     int searchCategory(string target, bool mode) //根据类别的搜索功能。
     {
-        vector<pair<Book, int>> candidate;
+        vector< pair<Book, int> > candidate;
         for (int i = 0; i < bookCount; i++)
         {
             if (kmp(bookList[i].category, target))
@@ -264,6 +264,7 @@ public:
 };
 class account
 {
+   
 };
 class student : public account
 {
@@ -280,7 +281,7 @@ bool kmp(string a, string b)//KMP是一种字符串匹配算法，可以实现b�
     int lena = a.length(), lenb = b.length(), startPos = 0, searchPos = 0;
     if (lena > lenb)
     {
-        cout << "错误:请输入搜索对象的全部或一部分。\n";
+        cerr << "错误:请输入搜索对象的全部或一部分。\n";
         return false;
     }
     if (a == b)
