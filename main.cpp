@@ -60,7 +60,7 @@ public:
         cout << "成功还书！";
         return true;
     }
-    bool operator<(const Book &another) const //重载小于运算符，实现基于标题的比较大小
+    bool operator < (const Book &another) const //重载小于运算符，实现基于标题的比较大小
     {
         return this->title < another.title;
     }
