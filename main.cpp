@@ -49,22 +49,22 @@ public:
     {
         if (borrowed)
         {
-            cout << "抱歉，此书已被借走。";
+            cout << "抱歉，此书已被借走。\n";
             return false;
         }
         borrowed = true;
-        cout << "成功借书！";
+        cout << "成功借书！\n";
         return true;
     }
     bool returnBook() //还书
     {
         if (!borrowed)
         {
-            cout << "这本书并没有被借走，你是想再送给我们一本嘛？";
+            cout << "这本书并没有被借走，你是想再送给我们一本嘛？\n";
             return false;
         }
         borrowed = false;
-        cout << "成功还书！";
+        cout << "成功还书！\n";
         return true;
     }
     bool operator<(const Book &another) const //重载小于运算符，实现基于标题的比较大小
@@ -268,7 +268,7 @@ private:
     int password;           //密码
     list<int> borrowedBook; //借了的书，使用链表存储，好删除
 public:
-    void borrowBook(repo &r)
+    void borrowBook(repo &r) //借书功能
     {
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type, bookNum;
@@ -297,14 +297,61 @@ public:
             cin >> target;
             bookNum = r.searchCategory(target, 1);
         }
-
         if (r.bookList[bookNum].borrow()) //书被成功借走，会返回true，这样才会计入借走的列表
         {
             borrowedBook.push_back(bookNum);
+            cout << "您借走的书馆内编号为" << bookNum << "，请妥善保管此数字，还书时将用到。";
         }
         return;
     }
-    void searchBook(repo &r);
+    void searchBook(repo &r) //找书功能
+    {
+        cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
+        int type;
+        string target;
+        cin >> type;
+        switch (type)
+        {
+        case 1:
+            cout << "请输入您想查找的题名:";
+            cin >> target;
+            r.searchTitle(target, 0);
+            break;
+        case 3:
+            cout << "请输入您想查找的作者:";
+            cin >> target;
+            r.searchAuthor(target, 0);
+            break;
+        case 2:
+            cout << "请输入您想查找的ISBN/ISSN，记得输入中间的连字符:";
+            cin >> target;
+            r.searchISBN(target, 0);
+            break;
+        case 4:
+            cout << "请输入您感兴趣的分类:";
+            cin >> target;
+            r.searchCategory(target, 0);
+        }
+    }
+    void returnBook(repo &r)
+    {
+        int bookNum;
+        cout << "请输入想还的书的馆内编号:";
+        cin >> bookNum;
+        list<int>::iterator i;
+        for (i = borrowedBook.begin(); i != borrowedBook.end(); i++)
+        {
+            if (*i == bookNum) //找到了要还的书
+            {
+                if (r.bookList[bookNum].returnBook())
+                {
+                    borrowedBook.erase(i);
+                    cout << "成功还书!\n";
+                }
+                break;
+            }
+        }
+    }
 };
 class student : public account
 {
@@ -312,11 +359,11 @@ class student : public account
 class admin : public account
 {
 };
+repo library;
+vector<student> studentList;
+vector<admin> adminList;
 int main()
 {
-    repo library;
-    vector<student> studentList;
-    vector<admin> adminList;
     return 0;
 }
 bool kmp(string a, string b) //KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
