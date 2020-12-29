@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <list>
+#include <ctime>
 #include <iomanip>
 using namespace std;
 bool kmp(string a, string b);
@@ -12,6 +13,13 @@ struct logRecord //在馆记录
     int time; //时间
     int id;   //人员ID
     logRecord(int t, int i) : time(t), id(i) {}
+};
+struct borrowRecord //借阅记录
+{
+    int time;
+    int id;
+    int bookNum;
+    borrowRecord(int t, int i, int n) : time(t), id(i), bookNum(n) {}
 };
 class Book
 {
@@ -75,12 +83,10 @@ public:
 class repo //书库
 {
 private:
-    vector<Book> bookList;    //图书列表
-    vector<logRecord> logRec; //
+    vector<Book> bookList;       //图书列表
+    vector<logRecord> logRec;    //在馆记录
+    vector<borrowRecord> borRec; //借阅记录
 public:
-    void borrow(int target)
-    {
-    }
     void add() //增加图书功能
     {
         bookList.push_back(bookList.size() + 1);
@@ -301,6 +307,7 @@ public:
         {
             borrowedBook.push_back(bookNum);
             cout << "您借走的书馆内编号为" << bookNum << "，请妥善保管此数字，还书时将用到。";
+            r.borRec.push_back(borrowRecord(time(NULL), username, bookNum));
         }
         return;
     }
@@ -364,6 +371,7 @@ vector<student> studentList;
 vector<admin> adminList;
 int main()
 {
+    adminList.push_back(admin());
     return 0;
 }
 bool kmp(string a, string b) //KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
