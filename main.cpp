@@ -16,7 +16,7 @@ public:
     string num;      //ISBN/ISSN
     string author;   //作者
     string category; //三级分类
-    void setBook_manual(const int bookCount)
+    Book(const int bookCount)
     {
         cout << "您正在录入第" << bookCount << "本图书的信息。\n";
         cout << "题目: ";
@@ -60,7 +60,7 @@ public:
         cout << "成功还书！";
         return true;
     }
-    bool operator < (const Book &another) const //重载小于运算符，实现基于标题的比较大小
+    bool operator<(const Book &another) const //重载小于运算符，实现基于标题的比较大小
     {
         return this->title < another.title;
     }
@@ -68,33 +68,21 @@ public:
 class repo //书库
 {
 private:
-    Book *bookList; //暂时使用数组实现，试试啥时候能用链表
-    int bookCount = 0;
+    vector<Book> bookList; //暂时使用数组实现，试试啥时候能用链表
 
 public:
-    repo()
-    {
-        bookList = new Book[100000];
-        return;
-    }
-    ~repo()
-    {
-        delete bookList;
-        return;
-    }
     void add() //增加图书功能
     {
-        bookList[bookCount].setBook_manual(bookCount);
-        bookCount++;
+        bookList.push_back(bookList.size() + 1);
     }
-    void modify(int num) //修改图书功能，num为图书序号
-    {
-        bookList[bookCount].setBook_manual(bookCount);
-    }
+    // void modify(int num) //修改图书功能，num为图书序号
+    // {
+    //     bookList[bookCount].setBook_manual(bookCount);
+    // }
     int searchISBN(string target, bool mode) //图书搜索功能1：ISBN/ISSN。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
         vector<int> candidate; //这个vector用于保存符合条件的书籍
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < bookList.size(); i++)
         {
             if (kmp(bookList[i].num, target))
             {
@@ -127,7 +115,7 @@ public:
     int searchTitle(string target, bool mode) //图书搜索功能2：标题。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
         vector<int> candidate; //这个vector用于保存符合条件的书籍
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < bookList.size(); i++)
         {
             if (kmp(bookList[i].title, target))
             {
@@ -159,8 +147,8 @@ public:
     }
     int searchAuthor(string target, bool mode) //图书搜索功能3：作者。作者名必须精确匹配。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
-        vector< pair<Book, int> > candidate; //这个vector用于保存符合条件的书籍
-        for (int i = 0; i < bookCount; i++)
+        vector<pair<Book, int>> candidate; //这个vector用于保存符合条件的书籍
+        for (int i = 0; i < bookList.size(); i++)
         {
             if (bookList[i].author == target)
             {
@@ -193,8 +181,8 @@ public:
     }
     int searchCategory(string target, bool mode) //根据类别的搜索功能。
     {
-        vector< pair<Book, int> > candidate;
-        for (int i = 0; i < bookCount; i++)
+        vector<pair<Book, int>> candidate;
+        for (int i = 0; i < bookList.size(); i++)
         {
             if (kmp(bookList[i].category, target))
             {
@@ -264,7 +252,6 @@ public:
 };
 class account
 {
-   
 };
 class student : public account
 {
@@ -276,7 +263,7 @@ int main()
 {
     return 0;
 }
-bool kmp(string a, string b)//KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
+bool kmp(string a, string b) //KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
 {
     int lena = a.length(), lenb = b.length(), startPos = 0, searchPos = 0;
     if (lena > lenb)
