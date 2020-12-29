@@ -6,6 +6,7 @@
 #include <list>
 #include <ctime>
 #include <iomanip>
+#include <regex>
 using namespace std;
 bool kmp(string a, string b);
 struct logRecord //在馆记录
@@ -214,7 +215,7 @@ public:
         int i;
         for (i = 0; i * 30 < candidate.size(); i++)
         {
-            cout << "第" << i * 30 + 1 << ' - ' << (i + 1) * 30 << "本:\n";
+            cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
             for (int j = i * 30; j <= (i + 1) * 30; j++)
             {
                 cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
@@ -271,9 +272,22 @@ class account
 {
 private:
     int username;           //用户名
-    int password;           //密码
+    string password;        //密码
     list<int> borrowedBook; //借了的书，使用链表存储，好删除
 public:
+    account()
+    {
+        cout << "请输入学工号数字:\n";
+        cin >> username;
+        cout << "请输入密码。\n要求：字母开头，可以包含字母/数字/下划线，6-17位：\n";
+        cin >> password;
+        regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
+        while(regex_match(password,passFormat))
+        {
+            cout<<"密码格式不正确。请再输入一次。\n";
+            cin>>password;
+        }
+    }
     void borrowBook(repo &r) //借书功能
     {
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
@@ -365,12 +379,14 @@ class student : public account
 };
 class admin : public account
 {
+public:
 };
 repo library;
 vector<student> studentList;
 vector<admin> adminList;
 int main()
 {
+    cout << "需要创建第一个管理员账户才可继续。\n";
     adminList.push_back(admin());
     return 0;
 }
