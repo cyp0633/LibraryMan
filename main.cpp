@@ -287,6 +287,7 @@ public:
             cout<<"密码格式不正确。请再输入一次。\n";
             cin>>password;
         }
+        cout<<"成功创建账号。\n";
     }
     void borrowBook(repo &r) //借书功能
     {
@@ -380,14 +381,21 @@ class student : public account
 class admin : public account
 {
 public:
+    void homepage()
+    {
+        homepage();
+        return;
+    }
 };
 repo library;
 vector<student> studentList;
 vector<admin> adminList;
 int main()
 {
+    cout<<"您想要导入账号数据，还是创建一个新设置？\n当然，并没有做导入工具，所以只能重新设置账户。";
     cout << "需要创建第一个管理员账户才可继续。\n";
     adminList.push_back(admin());
+    cout<<"现在将登入这个账号……";
     return 0;
 }
 bool kmp(string a, string b) //KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
