@@ -29,7 +29,7 @@ private:
 public:
     void add() //增加图书功能
     {
-        bookList.push_back(bookList.size() + 1);
+        bookList.push_back(Book());
     }
     void modify(int num) //修改图书功能，num为图书序号
     {
@@ -40,7 +40,7 @@ public:
         vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].num, target))
+            if ((!bookList[i].deleted)&&kmp(bookList[i].num, target))
             {
                 candidate.push_back(i);
             }
@@ -73,7 +73,7 @@ public:
         vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].title, target))
+            if (kmp(bookList[i].title, target)&&!bookList[i].deleted)
             {
                 candidate.push_back(i);
             }
@@ -106,7 +106,7 @@ public:
         vector<pair<Book, int>> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (bookList[i].author == target)
+            if (bookList[i].author == target&&!bookList[i].deleted)
             {
                 candidate.push_back(pair<Book, int>(bookList[i], i));
             }
@@ -140,7 +140,7 @@ public:
         vector<pair<Book, int>> candidate;
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].category, target))
+            if (kmp(bookList[i].category, target)&&!bookList[i].deleted)
             {
                 candidate.push_back(pair<Book, int>(bookList[i], i));
             }
@@ -206,6 +206,10 @@ public:
         }
     }
     friend class account;
+    void deleteBook(int num)
+    {
+        bookList[num].deleted=true;
+    }
 };
 repo library;
 #endif

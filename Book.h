@@ -7,15 +7,17 @@ class Book
 {
 private:
     bool borrowed; //是否被借走了
+
 public:
     string title;    //题名
     bool serial;     //是否为连续出版物(ISSN)
     string num;      //ISBN/ISSN
     string author;   //作者
     string category; //三级分类
-    Book(const int bookCount)
+    bool deleted;    //是否被删除
+    Book()
     {
-        cout << "您正在录入第" << bookCount << "本图书的信息。\n";
+        cout << "请输入本书的信息。";
         cout << "题目: ";
         cin >> title;
         cout << "ISBN/ISSN: ";
@@ -33,6 +35,7 @@ public:
         cout << "三级分类(如A751/6 1): ";
         getline(cin, category);
         borrowed = false;
+        deleted = false;
         return;
     }
     void printInfo()
@@ -41,6 +44,13 @@ public:
     }
     void setBook_manual()
     {
+        if(deleted)
+        {
+            cout<<"本书不存在！";
+            return;
+        }
+        cout << "下面是本书的基本信息。\n";
+        cout << *this;
         cout << "请输入您想修改的信息对应的序号：\n1-题目 | 2-ISBN/ISSN | 3-作者 | 4-分类\n";
         int infoNum;
         cin >> infoNum;
@@ -67,6 +77,11 @@ public:
     }
     bool borrow() //借书
     {
+                if(deleted)
+        {
+            cout<<"本书不存在！";
+            return false;
+        }
         if (borrowed)
         {
             cout << "抱歉，此书已被借走。\n";
@@ -78,6 +93,11 @@ public:
     }
     bool returnBook() //还书
     {
+                if(deleted)
+        {
+            cout<<"本书不存在！";
+            return false;
+        }
         if (!borrowed)
         {
             cout << "这本书并没有被借走，你是想再送给我们一本嘛？\n";
@@ -93,4 +113,24 @@ public:
     }
     friend ostream &operator<<(ostream &output, Book b);
 };
+ostream &operator<<(ostream &output, Book b) //输出书本信息
+{
+            if(deleted)
+        {
+            cout<<"本书不存在！";
+            return;
+        }
+    output << "题目:" << b.title << '\n';
+    output << "作者:" << b.author << '\n';
+    if (b.serial)
+    {
+        output << "ISSN:" << b.num << '\n';
+    }
+    else
+    {
+        output << "ISBN:" << b.num << '\n';
+    }
+    output << "分类:" << b.category << '\n';
+    return output;
+}
 #endif

@@ -109,6 +109,11 @@ public:
                     borrowedBook.erase(i);
                     cout << "成功还书!\n";
                 }
+                else
+                {
+                    cout<<"还书不成功。\n";
+                }
+                
                 break;
             }
         }
