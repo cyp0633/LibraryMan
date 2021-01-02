@@ -54,6 +54,36 @@ public:
         borrowed = false;
         return;
     }
+    void printInfo()
+    {
+        return;
+    }
+    void setBook_manual()
+    {
+        cout << "请输入您想修改的信息对应的序号：\n1-题目 | 2-ISBN/ISSN | 3-作者 | 4-分类\n";
+        int infoNum;
+        cin >> infoNum;
+        switch (infoNum)
+        {
+        case 1:
+            cout << "请输入新题目:";
+            cin >> title;
+            break;
+        case 2:
+            cout << "请输入新ISBN/ISSN:";
+            cin >> num;
+            break;
+        case 3:
+            cout << "请输入新作者信息:";
+            cin >> author;
+            break;
+        case 4:
+            cout << "请输入新分类:";
+            cin >> category;
+            break;
+        }
+        return;
+    }
     bool borrow() //借书
     {
         if (borrowed)
@@ -80,7 +110,9 @@ public:
     {
         return this->title < another.title;
     }
+    friend ostream& operator<<(ostream& output,Book b);
 };
+
 class repo //书库
 {
 private:
@@ -92,10 +124,10 @@ public:
     {
         bookList.push_back(bookList.size() + 1);
     }
-    // void modify(int num) //修改图书功能，num为图书序号
-    // {
-    //     bookList[bookCount].setBook_manual(bookCount);
-    // }
+    void modify(int num) //修改图书功能，num为图书序号
+    {
+        bookList[num].setBook_manual();
+    }
     int searchISBN(string target, bool mode) //图书搜索功能1：ISBN/ISSN。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
         vector<int> candidate; //这个vector用于保存符合条件的书籍
@@ -282,12 +314,12 @@ public:
         cout << "请输入密码。\n要求：字母开头，可以包含字母/数字/下划线，6-17位：\n";
         cin >> password;
         regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
-        while(regex_match(password,passFormat))
+        while (regex_match(password, passFormat))
         {
-            cout<<"密码格式不正确。请再输入一次。\n";
-            cin>>password;
+            cout << "密码格式不正确。请再输入一次。\n";
+            cin >> password;
         }
-        cout<<"成功创建账号。\n";
+        cout << "成功创建账号。\n";
     }
     void borrowBook(repo &r) //借书功能
     {
@@ -381,8 +413,18 @@ class student : public account
 class admin : public account
 {
 public:
-    void homepage()
+    void homepage() //管理员账户的主界面
     {
+        cout << "现在登录的是管理员账户，请输入您要执行的操作对应的序号。\n1-添加图书 | 2-修改图书 | 3-搜索图书 | 4-添加账号 | 5-修改账号 | 6-退出到主页面";
+        int operation;
+        cin >> operation;
+        switch (operation)
+        {
+        case 1:
+            library.add();
+            break;
+        case 2:
+        }
         homepage();
         return;
     }
@@ -392,10 +434,11 @@ vector<student> studentList;
 vector<admin> adminList;
 int main()
 {
-    cout<<"您想要导入账号数据，还是创建一个新设置？\n当然，并没有做导入工具，所以只能重新设置账户。";
+    cout << "您想要导入账号数据，还是创建一个新设置？\n当然，并没有做导入工具，所以只能重新设置账户。";
     cout << "需要创建第一个管理员账户才可继续。\n";
     adminList.push_back(admin());
-    cout<<"现在将登入这个账号……";
+    cout << "现在将登入这个账号……";
+    adminList[0].homepage();
     return 0;
 }
 bool kmp(string a, string b) //KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
