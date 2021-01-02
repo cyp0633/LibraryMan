@@ -4,6 +4,9 @@
 #include <vector>
 class student : public account
 {
+    public:
+    student(int n,string password):account(n,password){}
+    
 };
 vector<student> studentList;
 #endif

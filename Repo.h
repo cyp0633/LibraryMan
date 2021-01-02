@@ -225,38 +225,6 @@ public:
     {
         bookList[num].deleted = true;
     }
-    void displayLogRec(unsigned int startTime,unsigned int endTime)//查询的起止时间
-    {
-        vector<logRecord>::iterator i;
-        if(endTime==0)
-        {
-            endTime=-1;
-        }
-        for(i=logRec.begin();i!=logRec.end();i++)
-        {
-            if(i->time>=startTime&&i->time<=endTime)
-            {
-                cout<<i->time<<" - "<<i->id<<"入馆\n";//找时候做一下时间戳转换为标准时间
-            }
-        }
-        return;
-    }
-    void displayBorRec(unsigned int startTime,unsigned int endTime)//查询的起止时间
-    {
-        vector<borrowRecord>::iterator i;
-        if(endTime==0)
-        {
-            endTime=-1;
-        }
-        for(i=borRec.begin();i!=borRec.end();i++)
-        {
-            if(i->time>=startTime&&i->time<=endTime)
-            {
-                cout<<i->time<<" - "<<i->id<<"借走了\""<<bookList[i->bookNum].title<<"\"\n";//找时候做一下时间戳转换为标准时间
-            }
-        }
-        return;
-    }
 };
 repo library;
 #endif
