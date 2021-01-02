@@ -15,9 +15,9 @@ public:
     string author;   //作者
     string category; //三级分类
     bool deleted;    //是否被删除
-    Book()
+    Book(int n)
     {
-        cout << "请输入本书的信息。";
+        cout << "请输入要添加的信息。";
         cout << "题目: ";
         cin >> title;
         cout << "ISBN/ISSN: ";
@@ -36,6 +36,12 @@ public:
         getline(cin, category);
         borrowed = false;
         deleted = false;
+        return;
+    }
+    Book()
+    {
+        borrowed=false;
+        deleted=false;
         return;
     }
     void printInfo()

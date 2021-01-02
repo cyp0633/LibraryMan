@@ -7,6 +7,7 @@
 #include <string>
 #include <algorithm>
 #include <iomanip>
+#include <fstream>
 struct logRecord //在馆记录
 {
     int time; //时间
@@ -29,7 +30,7 @@ private:
 public:
     void add() //增加图书功能
     {
-        bookList.push_back(Book());
+        bookList.push_back(Book(1));
     }
     void modify(int num) //修改图书功能，num为图书序号
     {
@@ -40,7 +41,7 @@ public:
         vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if ((!bookList[i].deleted)&&kmp(bookList[i].num, target))
+            if ((!bookList[i].deleted) && kmp(bookList[i].num, target))
             {
                 candidate.push_back(i);
             }
@@ -73,7 +74,7 @@ public:
         vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].title, target)&&!bookList[i].deleted)
+            if (kmp(bookList[i].title, target) && !bookList[i].deleted)
             {
                 candidate.push_back(i);
             }
@@ -106,7 +107,7 @@ public:
         vector<pair<Book, int>> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (bookList[i].author == target&&!bookList[i].deleted)
+            if (bookList[i].author == target && !bookList[i].deleted)
             {
                 candidate.push_back(pair<Book, int>(bookList[i], i));
             }
@@ -140,7 +141,7 @@ public:
         vector<pair<Book, int>> candidate;
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].category, target)&&!bookList[i].deleted)
+            if (kmp(bookList[i].category, target) && !bookList[i].deleted)
             {
                 candidate.push_back(pair<Book, int>(bookList[i], i));
             }
@@ -205,10 +206,24 @@ public:
             }
         }
     }
+    void fileImport() //文件导入书籍目录
+    {
+        ifstream bookInput;
+        bookInput.open("books.txt",ios::in);
+        string title;
+        while(bookInput>>title)
+        {
+            bookList.push_back(Book());
+            bookList.back().title=title;
+            bookInput>>bookList.back().num>>bookList.back().author;//ISBN和ISSN的处理怎么搞？
+            getline(bookInput,bookList.back().category);
+        }
+        bookInput.close();
+    }
     friend class account;
     void deleteBook(int num)
     {
-        bookList[num].deleted=true;
+        bookList[num].deleted = true;
     }
 };
 repo library;
