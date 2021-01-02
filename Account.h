@@ -4,8 +4,11 @@
 #include <regex>
 #include "Repo.h"
 #include "Book.h"
+#include "Admi.h"
+#include "Student.h"
 #include <string>
 #include <list>
+#include<fstream>
 using namespace std;
 class account
 {
@@ -28,6 +31,7 @@ public:
         }
         cout << "成功创建账号。\n";
     }
+    account(int n,string pswd):username(n),password(pswd){}
     void borrowBook(repo &r) //借书功能
     {
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
@@ -119,4 +123,32 @@ public:
         }
     }
 };
+void fileImportAccount()
+{
+    cout<<"即将从account.txt读取账户信息,请确认没有重复的账号。\n请注意：密码格式为字母开头，可以包含字母/数字/下划线，6-17位。\n如果不符合要求，将不会导入。";
+    string username;
+    string password;
+    int count=0;
+    regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
+    ifstream accountImport;
+    accountImport.open("account.txt",ios::in);
+    getline(accountImport,username);
+    while(accountImport>>username>>password)
+    {
+        if(username=="STUDENT")
+        {
+            break;
+        }
+        studentList.push_back(student(stoi(username),password));
+        count++;
+    }
+    while(accountImport>>username>>password)
+    {
+        adminList.push_back(admin(stoi(username),password));
+        count++;
+    }
+    accountImport.close();
+    cout<<"导入完成，共导入"<<count<<"个账号。\n";
+    return;
+}
 #endif
