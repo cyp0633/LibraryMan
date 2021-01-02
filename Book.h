@@ -1,7 +1,7 @@
 #ifndef _BOOK_H_INCLUDED
 #define _BOOK_H_INCLUDED
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
 using namespace std;
 class Book
 {
@@ -91,6 +91,6 @@ public:
     {
         return this->title < another.title;
     }
-    friend ostream& operator<<(ostream& output,Book b);
+    friend ostream &operator<<(ostream &output, Book b);
 };
 #endif

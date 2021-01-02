@@ -1,8 +1,8 @@
 #ifndef _ADMI_H_INCLUDED_
 #define _ADMI_H_INCLUDED_
-#include"Account.h"
-#include<iostream>
-#include<vector>
+#include "Account.h"
+#include <iostream>
+#include <vector>
 using namespace std;
 class admin : public account
 {
@@ -18,7 +18,7 @@ public:
             library.add();
             break;
         case 2:
-        break;
+            break;
         }
         homepage();
         return;

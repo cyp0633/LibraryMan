@@ -1,7 +1,7 @@
 #ifndef _KMP_H_INCLUDED_
 #define _KMP_H_INCLUDED_
-#include<string>
-#include<iostream>
+#include <string>
+#include <iostream>
 using namespace std;
 bool kmp(string a, string b) //KMP是一种字符串匹配算法，可以实现b部分匹配a的查找。
 {
