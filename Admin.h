@@ -1,5 +1,5 @@
-#ifndef _ADMI_H_INCLUDED_
-#define _ADMI_H_INCLUDED_
+#ifndef _ADMIN_H_INCLUDED_
+#define _ADMIN_H_INCLUDED_
 #include "Account.h"
 #include <iostream>
 #include <vector>

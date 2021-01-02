@@ -4,7 +4,7 @@
 #include <regex>
 #include "Repo.h"
 #include "Book.h"
-#include "Admi.h"
+#include "Admin.h"
 #include "Student.h"
 #include <string>
 #include <list>
