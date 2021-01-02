@@ -15,8 +15,40 @@ public:
     string author;   //作者
     string category; //三级分类
     bool deleted;    //是否被删除
-    Book(int n)
+    Book(int n);
+    Book(){borrowed=false;deleted=false;return;}
+    void printInfo(){return;}
+    void setBook_manual();
+    bool returnBook(); //还书
+    bool borrow();
+    bool operator<(const Book &another) const //重载小于运算符，实现基于标题的比较大小
     {
+        return this->title < another.title;
+    }
+    friend ostream &operator<<(ostream &output, Book b);
+};
+ostream &operator<<(ostream &output, Book b) //输出书本信息
+{
+        if(b.deleted)
+        {
+            cout<<"本书不存在！";
+            return output;
+        }
+    output << "题目:" << b.title << '\n';
+    output << "作者:" << b.author << '\n';
+    if (b.serial)
+    {
+        output << "ISSN:" << b.num << '\n';
+    }
+    else
+    {
+        output << "ISBN:" << b.num << '\n';
+    }
+    output << "分类:" << b.category << '\n';
+    return output;
+}
+Book::Book(int n)
+  {
         cout << "请输入要添加的信息。";
         cout << "题目: ";
         cin >> title;
@@ -24,7 +56,7 @@ public:
         cin >> num;
         if (num.length() >= 11) //ISBN有11位，ISSN只有8位。判断是否为连续出版物，适用ISBN还是ISSN
         {
-            serial = false;
+            serial = false;//
         }
         else
         {
@@ -38,17 +70,7 @@ public:
         deleted = false;
         return;
     }
-    Book()
-    {
-        borrowed=false;
-        deleted=false;
-        return;
-    }
-    void printInfo()
-    {
-        return;
-    }
-    void setBook_manual()
+    void Book::setBook_manual()
     {
         if(deleted)
         {
@@ -81,7 +103,7 @@ public:
         }
         return;
     }
-    bool borrow() //借书
+    bool Book::borrow() //借书
     {
                 if(deleted)
         {
@@ -97,9 +119,9 @@ public:
         cout << "成功借书！\n";
         return true;
     }
-    bool returnBook() //还书
+    bool Book::returnBook() //还书
     {
-                if(deleted)
+        if(deleted)
         {
             cout<<"本书不存在！";
             return false;
@@ -113,30 +135,4 @@ public:
         cout << "成功还书！\n";
         return true;
     }
-    bool operator<(const Book &another) const //重载小于运算符，实现基于标题的比较大小
-    {
-        return this->title < another.title;
-    }
-    friend ostream &operator<<(ostream &output, Book b);
-};
-ostream &operator<<(ostream &output, Book b) //输出书本信息
-{
-            if(deleted)
-        {
-            cout<<"本书不存在！";
-            return;
-        }
-    output << "题目:" << b.title << '\n';
-    output << "作者:" << b.author << '\n';
-    if (b.serial)
-    {
-        output << "ISSN:" << b.num << '\n';
-    }
-    else
-    {
-        output << "ISBN:" << b.num << '\n';
-    }
-    output << "分类:" << b.category << '\n';
-    return output;
-}
 #endif

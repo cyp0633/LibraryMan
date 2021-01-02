@@ -209,7 +209,7 @@ public:
     void fileImport() //文件导入书籍目录
     {
         ifstream bookInput;
-        bookInput.open("books.txt",ios::in);
+        bookInput.open("books.txt",ios::in|ios::app);
         string title;
         while(bookInput>>title)
         {

@@ -12,7 +12,7 @@ class account
 private:
     int username;           //用户名
     string password;        //密码
-    list<int> borrowedBook; //借了的书，使用链表存储，好删除
+    list<int> borrowedBook; //借了的书，使用链表存储，好删除  借书记录
 public:
     account()
     {
@@ -21,7 +21,7 @@ public:
         cout << "请输入密码。\n要求：字母开头，可以包含字母/数字/下划线，6-17位：\n";
         cin >> password;
         regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
-        while (regex_match(password, passFormat))
+        while (!regex_match(password, passFormat))
         {
             cout << "密码格式不正确。请再输入一次。\n";
             cin >> password;
