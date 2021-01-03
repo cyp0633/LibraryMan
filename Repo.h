@@ -225,6 +225,8 @@ public:
     {
         bookList[num].deleted = true;
     }
+<<<<<<< HEAD
+=======
     void displayLogRec(unsigned int startTime, unsigned int endTime) //查询的起止时间
     {
         vector<logRecord>::iterator i;
@@ -257,6 +259,7 @@ public:
         }
         return;
     }
+>>>>>>> adbd4355f01db21eeb1ba5a64dd9caf304c55dfd
 };
 repo library;
 #endif
