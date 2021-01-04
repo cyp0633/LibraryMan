@@ -24,7 +24,8 @@ int main()
     else
     {
         adminList.push_back(admin());
-        cout << "现在将登入这个账号……";
     }
+    cout<<"正在跳转登录界面。";
+    accountSwitcher();
     return 0;
 }

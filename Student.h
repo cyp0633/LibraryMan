@@ -21,6 +21,7 @@ public:
     {
         account(id,pswd);
     }
+    void homepage();
 };
 //vector<student> studentList;
 #endif

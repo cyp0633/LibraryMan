@@ -127,7 +127,18 @@ public:
             }
         }
     }
+    int verify(int id, string pswd);
 };
+int account::verify(int id, string pswd)
+{
+    if (id == username)
+    {
+        if (pswd == password)
+        {
+            return 1;
+        }
+    }
+}
 void fileImportAccount()
 {
     cout << "即将从account.txt读取账户信息,请确认没有重复的账号。\n请注意：密码格式为字母开头，可以包含字母/数字/下划线，6-17位。\n如果不符合要求，将不会导入。";
@@ -154,6 +165,50 @@ void fileImportAccount()
     }
     accountImport.close();
     cout << "导入完成，共导入" << count << "个账号。\n";
+    return;
+}
+void accountSwitcher()
+{
+    cout << "欢迎登录，请输入您的账号。\n";
+    int id;
+    string pswd;
+    cin >> id;
+    cout << "请输入密码。\n";
+    cin >> pswd;
+    for (vector<student>::iterator i = studentList.begin(); i != studentList.end(); i++)
+    {
+        int statusValue = i->verify(id, pswd);
+        switch (statusValue)
+        {
+        case 1:
+            cout << "登陆成功！您的账号是学生账号。\n";
+            i->homepage();
+            return;
+        case -1:
+            cout << "密码错误！\n";
+            break;
+        default:
+            break;
+        }
+    }
+    for (vector<admin>::iterator i = adminList.begin(); i != adminList.end(); i++)
+    {
+        int statusValue = i->verify(id, pswd);
+        switch (statusValue)
+        {
+        case 1:
+            cout << "登陆成功！您的账号是管理员账号。\n";
+            i->homepage();
+            return;
+        case -1:
+            cout << "密码错误！\n";
+            break;
+        default:
+            break;
+        }
+    }
+    cout << "登录失败，可能是密码错误或者没有找到账号。\n";
+    accountSwitcher();
     return;
 }
 #endif
