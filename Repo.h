@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Book.h"
 #include "KMP.h"
+#include "Admin.h"
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -96,7 +97,7 @@ public:
         }
         if (mode == 1)
         {
-            cout << "请输入想借阅的书籍序号: ";
+            cout << "请输入想查阅的书籍序号: ";
             int temp;
             cin >> temp;
             return candidate[temp - 1]; //这个才是真正的书籍序号
@@ -257,6 +258,7 @@ public:
         }
         return;
     }
+    friend class admin;
 };
 repo library;
 #endif

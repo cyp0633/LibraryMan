@@ -3,7 +3,7 @@
 #include "Repo.h"
 #include "Account.h"
 #include "Student.h"
-#include "Admi.h"
+#include "Admin.h"
 #include "KMP.h"
 #include <cstdio>
 #include <iostream>

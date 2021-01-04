@@ -15,7 +15,12 @@ public:
     string author;   //作者
     string category; //三级分类
     bool deleted;    //是否被删除
-    Book(int n)
+    Book()//自动导入用这个构造
+    {
+        deleted=false;
+        borrowed=false;
+    }
+    Book(int n)//手动添加用这个构造
     {
         cout << "请输入要添加的信息。";
         cout << "题目: ";
@@ -40,8 +45,8 @@ public:
     }
     Book()
     {
-        borrowed=false;
-        deleted=false;
+        borrowed = false;
+        deleted = false;
         return;
     }
     void printInfo()
@@ -50,9 +55,9 @@ public:
     }
     void setBook_manual()
     {
-        if(deleted)
+        if (deleted)
         {
-            cout<<"本书不存在！";
+            cout << "本书不存在！";
             return;
         }
         cout << "下面是本书的基本信息。\n";
@@ -83,9 +88,9 @@ public:
     }
     bool borrow() //借书
     {
-                if(deleted)
+        if (deleted)
         {
-            cout<<"本书不存在！";
+            cout << "本书不存在！";
             return false;
         }
         if (borrowed)
@@ -99,9 +104,9 @@ public:
     }
     bool returnBook() //还书
     {
-                if(deleted)
+        if (deleted)
         {
-            cout<<"本书不存在！";
+            cout << "本书不存在！";
             return false;
         }
         if (!borrowed)
@@ -118,14 +123,15 @@ public:
         return this->title < another.title;
     }
     friend ostream &operator<<(ostream &output, Book b);
+    void modify();
 };
 ostream &operator<<(ostream &output, Book b) //输出书本信息
 {
-            if(deleted)
-        {
-            cout<<"本书不存在！";
-            return;
-        }
+    if (b.deleted)
+    {
+        cout << "本书不存在！";
+        return;
+    }
     output << "题目:" << b.title << '\n';
     output << "作者:" << b.author << '\n';
     if (b.serial)
