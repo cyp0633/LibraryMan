@@ -1,20 +1,16 @@
-//自定义头文件
-#include "Book.h"
-#include "Repo.h"
-#include "Account.h"
-#include "Student.h"
-#include "Admin.h"
-#include "KMP.h"
 #include <cstdio>
 #include <iostream>
-#include <string>
 #include <vector>
-#include <algorithm>
-#include <list>
-#include <ctime>
-#include <iomanip>
-#include <regex>
+#include "Account.h"
+#include "Admin.h"
+#include "Book.h"
+#include "KMP.h"
+#include "Repo.h"
+#include "Student.h"
 using namespace std;
+vector<student> studentList;
+vector<admin> adminList;
+repo library;
 int main()
 {
     cout << "您想要导入账号数据，还是创建一个新设置？\n1-从文件导入账号数据 | 2-创建新账号数据\n";

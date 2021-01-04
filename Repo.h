@@ -1,14 +1,14 @@
 #ifndef _REPO_H_INCLUDED
 #define _REPO_H_INCLUDED
 #include <iostream>
-#include "Book.h"
-#include "KMP.h"
-#include "Admin.h"
 #include <vector>
 #include <string>
 #include <algorithm>
 #include <iomanip>
 #include <fstream>
+#include "Book.h"
+#include "KMP.h"
+//#include "variable.h"
 struct logRecord //在馆记录
 {
     int time; //时间
@@ -62,7 +62,7 @@ public:
             cout << "请从上面的列表里查阅您想找到的书籍。\n";
             return 0;
         }
-        if (mode == 1)
+        else
         {
             cout << "请输入想借阅的书籍序号: ";
             int temp;
@@ -95,7 +95,7 @@ public:
             cout << "请从上面的列表里查阅您想找到的书籍。\n";
             return 0;
         }
-        if (mode == 1)
+        else
         {
             cout << "请输入想查阅的书籍序号: ";
             int temp;
@@ -129,7 +129,7 @@ public:
             cout << "请从上面的列表里查阅您想找到的书籍。\n";
             return 0;
         }
-        if (mode == 1)
+        else
         {
             cout << "请输入想借阅的书籍序号: ";
             int temp;
@@ -195,16 +195,18 @@ public:
             {
                 return candidate[temp].second; //返回书籍的真正序号
             }
+            else
+            {
+                return -1;
+            }
+            
         }
         else
         {
             cout << "如果您未找到您要找的书，请输入-1以退出；如果找到，请输入1:";
             int temp;
             cin >> temp;
-            if (temp == -1)
-            {
-                return 0;
-            }
+            return 0;
         }
     }
     void fileImport() //文件导入书籍目录
@@ -260,5 +262,5 @@ public:
     }
     friend class admin;
 };
-repo library;
+//repo library;
 #endif

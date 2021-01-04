@@ -43,12 +43,6 @@ public:
         deleted = false;
         return;
     }
-    Book()
-    {
-        borrowed = false;
-        deleted = false;
-        return;
-    }
     void printInfo()
     {
         return;
@@ -129,8 +123,8 @@ ostream &operator<<(ostream &output, Book b) //输出书本信息
 {
     if (b.deleted)
     {
-        cout << "本书不存在！";
-        return;
+        output << "本书不存在！\n";
+        return output;
     }
     output << "题目:" << b.title << '\n';
     output << "作者:" << b.author << '\n';
