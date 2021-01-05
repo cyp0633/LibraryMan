@@ -8,7 +8,6 @@
 #include <fstream>
 #include "Book.h"
 #include "KMP.h"
-//#include "variable.h"
 struct logRecord //在馆记录
 {
     int time; //时间
@@ -261,6 +260,7 @@ public:
         return;
     }
     friend class admin;
+    friend class student;
 };
 //repo library;
 #endif

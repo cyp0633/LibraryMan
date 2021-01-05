@@ -6,16 +6,11 @@
 #include <list>
 #include <fstream>
 #include "Repo.h"
-#include "variable.h"
-//#include "Student.h"
-//#include "Admin.h"
-class admin;
-class student;
-class repo;
+#include "Student.h"
+#include "Admin.h"
 using namespace std;
-extern vector<student> studentList;
-extern vector<admin> adminList;
-extern repo library;
+class student;
+class admin;
 class account
 {
 private:
@@ -38,7 +33,7 @@ public:
         cout << "成功创建账号。\n";
     }
     account(int n, string pswd) : username(n), password(pswd) {}
-    void borrowBook() //借书功能
+    void borrowBook(repo library) //借书功能
     {
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type, bookNum;
@@ -75,7 +70,7 @@ public:
         }
         return;
     }
-    void searchBook() //找书功能
+    void searchBook(repo library) //找书功能
     {
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type;
@@ -104,7 +99,7 @@ public:
             library.searchCategory(target, 0);
         }
     }
-    void returnBook()
+    void returnBook(repo library)
     {
         int bookNum;
         cout << "请输入想还的书的馆内编号:";
@@ -127,19 +122,10 @@ public:
             }
         }
     }
-    int verify(int id, string pswd);
+    friend class student;
+    friend class admin;
 };
-int account::verify(int id, string pswd)
-{
-    if (id == username)
-    {
-        if (pswd == password)
-        {
-            return 1;
-        }
-    }
-}
-void fileImportAccount()
+void fileImportAccount(vector<student> &studentList, vector<admin> adminList)
 {
     cout << "即将从account.txt读取账户信息,请确认没有重复的账号。\n请注意：密码格式为字母开头，可以包含字母/数字/下划线，6-17位。\n如果不符合要求，将不会导入。";
     string username;
@@ -167,7 +153,7 @@ void fileImportAccount()
     cout << "导入完成，共导入" << count << "个账号。\n";
     return;
 }
-void accountSwitcher()
+void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
     cout << "欢迎登录，请输入您的账号。\n";
     int id;
@@ -182,7 +168,7 @@ void accountSwitcher()
         {
         case 1:
             cout << "登陆成功！您的账号是学生账号。\n";
-            i->homepage();
+            i->homepage(studentList, adminList, library);
             return;
         case -1:
             cout << "密码错误！\n";
@@ -198,7 +184,7 @@ void accountSwitcher()
         {
         case 1:
             cout << "登陆成功！您的账号是管理员账号。\n";
-            i->homepage();
+            i->homepage(studentList, adminList, library);
             return;
         case -1:
             cout << "密码错误！\n";
@@ -208,7 +194,7 @@ void accountSwitcher()
         }
     }
     cout << "登录失败，可能是密码错误或者没有找到账号。\n";
-    accountSwitcher();
+    accountSwitcher(studentList, adminList, library);
     return;
 }
 #endif
