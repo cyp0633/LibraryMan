@@ -146,5 +146,26 @@ public:
             }
         }
     }
+    friend pair<bool,int> accountFinder(vector<student> &studentList,vector<admin> &adminList,long long int id);
+    void modify();
 };
+void student::modify()
+{
+    cout << "该账号学号为" << username << ",密码为" << password << "。您想修改什么？\n1-学号 | 2-密码\n";
+    int opt;
+    cin >> opt;
+    switch (opt)
+    {
+    case 1:
+        cout << "请输入新学号\n";
+        cin >> username;
+        break;
+    case 2:
+        cout << "请输入新密码\n";
+        cin >> password;
+        break;
+    }
+    cout<<"修改完成\n";
+    return;
+}
 #endif

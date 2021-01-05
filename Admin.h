@@ -9,7 +9,7 @@ class repo;
 class student;
 using namespace std;
 void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library);
-
+pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
 class admin
 {
 private:
@@ -141,48 +141,11 @@ public:
             }
         }
     }
+    friend pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
+    void modify();
 };
 void admin::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
-    // cout << "现在登录的是管理员账户，请输入您要执行的操作对应的序号。\n1-添加图书 | 2-修改图书 | 3-搜索图书 | 4-删除图书 | 5-借阅图书\n6-归还图书 | 7-添加学生账号 | 8-修改账号 | 9-退出到主页面 | 其他-退出账号\n";
-    // int operation;
-    // cin >> operation;
-    // switch (operation)
-    // {
-    // case 1: //添加图书
-    //     library.add();
-    //     break;
-    // case 2: //修改图书
-    // {
-    //     cout << "您想修改哪本书？支持题目模糊搜索。\n";
-    //     string title;
-    //     cin >> title;
-    //     int num;
-    //     num = library.searchTitle(title, 1);
-    //     library.bookList[num].setBook_manual();
-    //     break;
-    // }
-    // case 3:
-    //     searchBook(library);
-    //     break;
-    // case 4:
-    //     deleteBook(library);
-    //     break;
-    // case 5:
-    //     borrowBook(library);
-    //     break;
-    // case 6:
-    //     returnBook(library);
-    //     break;
-    // case 7:
-    //     studentList.push_back(student());
-    //     break;
-    // case 9:
-    //     homepage(studentList, adminList, library);
-    //     break;
-    // default:
-    //     return;
-    // }
     cout << "您现在处于管理员账户。请输入您的操作类别。\n1-书库操作 | 2-图书操作 | 3-账户操作 | 4-记录查询 | 5-退出账号\n";
     int opt1, opt2;
     cin >> opt1;
@@ -244,6 +207,23 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
             studentList.push_back(student());
             break;
         case 2: //待做
+            cout << "请输入待修改的人学号\n";
+            long long int id;
+            pair<bool, int> target = accountFinder(studentList, adminList, id);
+            if (target.first && target.second == -1)
+            {
+                cout << "未找到该账号。\n";
+                break;
+            }
+            if (target.first)
+            {
+                studentList[target.second].modify();
+            }
+            else
+            {
+                adminList[target.second].modify();
+            }
+            cout << "已修改。\n";
             break;
         }
         break;
@@ -279,5 +259,24 @@ void admin::deleteBook(repo &library) //删除图书
     cin >> title;
     int deleteNum = library.searchTitle(title, 1);
     library.deleteBook(deleteNum);
+}
+void admin::modify()
+{
+    cout << "该账号学号为" << username << ",密码为" << password << "。您想修改什么？\n1-学号 | 2-密码\n";
+    int opt;
+    cin >> opt;
+    switch (opt)
+    {
+    case 1:
+        cout << "请输入新学号\n";
+        cin >> username;
+        break;
+    case 2:
+        cout << "请输入新密码\n";
+        cin >> password;
+        break;
+    }
+    cout<<"修改完成\n";
+    return;
 }
 #endif
