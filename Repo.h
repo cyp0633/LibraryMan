@@ -48,22 +48,22 @@ public:
         }
         if (candidate.size() == 0)
         {
-            cout << "没有找到匹配此ISBN/ISSN的书籍。\n";
+            std::cout << "没有找到匹配此ISBN/ISSN的书籍。\n";
             return -1;
         }
-        cout << "找到" << candidate.size() << "个序号符合的书籍，列表如下：\n";
+        std::cout << "找到" << candidate.size() << "个序号符合的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
+            std::cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
-            cout << "请从上面的列表里查阅您想找到的书籍。\n";
+            std::cout << "请从上面的列表里查阅您想找到的书籍。\n";
             return 0;
         }
         else
         {
-            cout << "请输入想借阅的书籍序号: ";
+            std::cout << "请输入想借阅的书籍序号: ";
             int temp;
             cin >> temp;
             return candidate[temp - 1];
@@ -81,17 +81,17 @@ public:
         }
         if (candidate.size() == 0)
         {
-            cout << "没有找到匹配此书名的书籍。\n";
+            std::cout << "没有找到匹配此书名的书籍。\n";
             return -1;
         }
-        cout << "找到" << candidate.size() << "个书名匹配的书籍，列表如下：\n";
+        std::cout << "找到" << candidate.size() << "个书名匹配的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
+            std::cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
-            cout << "请从上面的列表里查阅您想找到的书籍。\n";
+            std::cout << "请从上面的列表里查阅您想找到的书籍。\n";
             return 0;
         }
         else
@@ -115,22 +115,22 @@ public:
         sort(candidate.begin(), candidate.end()); //运算符重载过啦，根据名称排序
         if (candidate.size() == 0)
         {
-            cout << "没有找到由此作者撰写的书籍。\n";
+            std::cout << "没有找到由此作者撰写的书籍。\n";
             return -1;
         }
-        cout << "找到" << candidate.size() << "个该作者出版的书籍，列表如下：\n";
+        std::cout << "找到" << candidate.size() << "个该作者出版的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
+            std::cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
         }
         if (mode == 0)
         {
-            cout << "请从上面的列表里查阅您想找到的书籍。\n";
+            std::cout << "请从上面的列表里查阅您想找到的书籍。\n";
             return 0;
         }
         else
         {
-            cout << "请输入想借阅的书籍序号: ";
+            std::cout << "请输入想借阅的书籍序号: ";
             int temp;
             cin >> temp;
             return candidate[temp - 1].second;
@@ -148,21 +148,21 @@ public:
         }
         if (candidate.size() == 0)
         {
-            cout << "书库中没有您想找到的分类。\n";
+            std::cout << "书库中没有您想找到的分类。\n";
         }
         sort(candidate.begin(), candidate.end());
-        cout << "找到了符合该分类的" << candidate.size() << "本书。\n";
+        std::cout << "找到了符合该分类的" << candidate.size() << "本书。\n";
         int i;
         for (i = 0; i * 30 < candidate.size(); i++)
         {
-            cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
+            std::cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
             for (int j = i * 30; j <= (i + 1) * 30; j++)
             {
-                cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+                std::cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
             }
             if (mode == 1)
             {
-                cout << "请输入您要查阅的书籍序号。如未找到，请输入-1，翻阅下一页:";
+                std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1，翻阅下一页:";
                 int temp;
                 cin >> temp;
                 if (temp != -1)
@@ -172,7 +172,7 @@ public:
             }
             else
             {
-                cout << "如果您未找到您要找的书，请输入-1；如果找到，请输入1:";
+                std::cout << "如果您未找到您要找的书，请输入-1；如果找到，请输入1:";
                 int temp;
                 cin >> temp;
                 if (temp == -1)
@@ -183,11 +183,11 @@ public:
         }
         for (int j = (i - 1) * 30; j < candidate.size(); j++)
         {
-            cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+            std::cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
         }
         if (mode == 1)
         {
-            cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出";
+            std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出";
             int temp;
             cin >> temp;
             if (temp != -1)
@@ -202,7 +202,7 @@ public:
         }
         else
         {
-            cout << "如果您未找到您要找的书，请输入-1以退出；如果找到，请输入1:";
+            std::cout << "如果您未找到您要找的书，请输入-1以退出；如果找到，请输入1:";
             int temp;
             cin >> temp;
             return 0;
@@ -215,12 +215,12 @@ public:
         int originalNum=bookList.size();
         bookInput.open("books.txt",ios::in);
         string title;
-        while(bookInput>>title)
+        while (bookInput >> title)
         {
             bookList.push_back(Book());
-            bookList.back().title=title;
-            bookInput>>bookList.back().num>>bookList.back().author;//ISBN和ISSN的处理怎么搞？
-            getline(bookInput,bookList.back().category);
+            bookList.back().title = title;
+            bookInput >> bookList.back().num >> bookList.back().author; //ISBN和ISSN的处理怎么搞？
+            getline(bookInput, bookList.back().category);
         }
         bookInput.close();
         cout<<"已导入"<<bookList.size()-originalNum<<"本图书。\n";
@@ -230,34 +230,34 @@ public:
     {
         bookList[num].deleted = true;
     }
-    void displayLogRec(unsigned int startTime,unsigned int endTime)//查询的起止时间
+    void displayLogRec(unsigned int startTime, unsigned int endTime) //查询的起止时间
     {
         vector<logRecord>::iterator i;
-        if(endTime==0)
+        if (endTime == 0)
         {
-            endTime=-1;
+            endTime = -1;
         }
-        for(i=logRec.begin();i!=logRec.end();i++)
+        for (i = logRec.begin(); i != logRec.end(); i++)
         {
-            if(i->time>=startTime&&i->time<=endTime)
+            if (i->time >= startTime && i->time <= endTime)
             {
-                cout<<i->time<<" - "<<i->id<<"入馆\n";//找时候做一下时间戳转换为标准时间
+                std::cout << i->time << " - " << i->id << "入馆\n"; //找时候做一下时间戳转换为标准时间
             }
         }
         return;
     }
-    void displayBorRec(unsigned int startTime,unsigned int endTime)//查询的起止时间
+    void displayBorRec(unsigned int startTime, unsigned int endTime) //查询的起止时间
     {
         vector<borrowRecord>::iterator i;
-        if(endTime==0)
+        if (endTime == 0)
         {
-            endTime=-1;
+            endTime = -1;
         }
-        for(i=borRec.begin();i!=borRec.end();i++)
+        for (i = borRec.begin(); i != borRec.end(); i++)
         {
-            if(i->time>=startTime&&i->time<=endTime)
+            if (i->time >= startTime && i->time <= endTime)
             {
-                cout<<i->time<<" - "<<i->id<<"借走了\""<<bookList[i->bookNum].title<<"\"\n";//找时候做一下时间戳转换为标准时间
+                std::cout << i->time << " - " << i->id << "借走了\"" << bookList[i->bookNum].title << "\"\n"; //找时候做一下时间戳转换为标准时间
             }
         }
         return;

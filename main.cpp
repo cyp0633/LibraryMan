@@ -17,9 +17,9 @@ int main()
     repo library;
     cout << "您想要导入账号数据，还是创建一个新设置？\n1-从文件导入账号数据 | 2-创建新账号数据\n";
     int newAccountMethod;
-    cout << "需要创建第一个管理员账户才可继续。\n";
-    cin>>newAccountMethod;
-    if(newAccountMethod==1)
+    std::cout << "需要创建第一个管理员账户才可继续。\n";
+    cin >> newAccountMethod;
+    if (newAccountMethod == 1)
     {
         fileImportAccount(studentList,adminList);
     }
