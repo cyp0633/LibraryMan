@@ -12,35 +12,34 @@ class admin;
 class student
 {
 private:
-    long long int username;           //用户名
+    long long int username; //用户名
     string password;        //密码
     list<int> borrowedBook; //借了的书，使用链表存储，好删除
 public:
-    student() 
+    student()
     {
         cout << "请输入学工号数字:\n";
         cin >> username;
         cout << "请输入密码。\n要求：字母开头，可以包含字母/数字/下划线，6-17位：\n";
         cin >> password;
         regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
-        while (regex_match(password, passFormat))
+        while (!regex_match(password, passFormat))
         {
             cout << "密码格式不正确。请再输入一次。\n";
             cin >> password;
         }
         cout << "成功创建账号。\n";
-
     }
     student(int id, string pswd)
     {
-        username=id;
-        password=pswd;
+        username = id;
+        password = pswd;
     }
     void homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
     {
         return;
     }
-    int verify(int id, string pswd)
+    int verify(long long int id, string pswd)
     {
         if (id == username)
         {
@@ -148,5 +147,4 @@ public:
         }
     }
 };
-//vector<student> studentList;
 #endif

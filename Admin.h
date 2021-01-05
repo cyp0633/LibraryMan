@@ -8,10 +8,12 @@
 class repo;
 class student;
 using namespace std;
+void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library);
+
 class admin
 {
 private:
-    long long int username;           //用户名
+    long long int username; //用户名
     string password;        //密码
     list<int> borrowedBook; //借了的书，使用链表存储，好删除
 public:
@@ -32,7 +34,7 @@ public:
     }
     admin(int id, string pswd) {}
     void deleteBook(repo &library);
-    int verify(int id, string pswd)
+    int verify(long long int id, string pswd)
     {
         if (id == username)
         {
@@ -140,48 +142,135 @@ public:
         }
     }
 };
-//vector<admin> adminList;
 void admin::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
-    cout << "现在登录的是管理员账户，请输入您要执行的操作对应的序号。\n1-添加图书 | 2-修改图书 | 3-搜索图书 | 4-删除图书 | 5-借阅图书\n6-归还图书 | 7-添加学生账号 | 8-修改账号 | 9-退出到主页面 | 其他-退出账号\n";
-    int operation;
-    cin >> operation;
-    switch (operation)
+    // cout << "现在登录的是管理员账户，请输入您要执行的操作对应的序号。\n1-添加图书 | 2-修改图书 | 3-搜索图书 | 4-删除图书 | 5-借阅图书\n6-归还图书 | 7-添加学生账号 | 8-修改账号 | 9-退出到主页面 | 其他-退出账号\n";
+    // int operation;
+    // cin >> operation;
+    // switch (operation)
+    // {
+    // case 1: //添加图书
+    //     library.add();
+    //     break;
+    // case 2: //修改图书
+    // {
+    //     cout << "您想修改哪本书？支持题目模糊搜索。\n";
+    //     string title;
+    //     cin >> title;
+    //     int num;
+    //     num = library.searchTitle(title, 1);
+    //     library.bookList[num].setBook_manual();
+    //     break;
+    // }
+    // case 3:
+    //     searchBook(library);
+    //     break;
+    // case 4:
+    //     deleteBook(library);
+    //     break;
+    // case 5:
+    //     borrowBook(library);
+    //     break;
+    // case 6:
+    //     returnBook(library);
+    //     break;
+    // case 7:
+    //     studentList.push_back(student());
+    //     break;
+    // case 9:
+    //     homepage(studentList, adminList, library);
+    //     break;
+    // default:
+    //     return;
+    // }
+    cout << "您现在处于管理员账户。请输入您的操作类别。\n1-书库操作 | 2-图书操作 | 3-账户操作 | 4-记录查询 | 5-退出账号\n";
+    int opt1, opt2;
+    cin >> opt1;
+    switch (opt1)
     {
-    case 1: //添加图书
-        library.add();
+    case 1: //书库操作
+    {
+        cout << "请选择操作。\n1-手动添加图书 | 2-修改图书 | 3-从文件导入图书 | 4-删除图书 | 其他-返回上一级\n";
+        cin >> opt2;
+        switch (opt2)
+        {
+        case 1:
+            library.add();
+            break;
+        case 2:
+        {
+            cout << "您想修改哪本书？支持题目模糊搜索。\n";
+            string title;
+            cin >> title;
+            int num;
+            num = library.searchTitle(title, 1);
+            library.bookList[num].setBook_manual();
+            break;
+        }
+        case 3:
+            library.fileImport();
+            break;
+        case 4:
+            deleteBook(library);
+            break;
+        }
         break;
-    case 2: //修改图书
+    }
+    case 2: //图书操作
     {
-        cout << "您想修改哪本书？支持题目模糊搜索。\n";
-        string title;
-        cin >> title;
-        int num;
-        num = library.searchTitle(title, 1);
-        library.bookList[num].setBook_manual();
+        cout << "请选择操作。\n1-搜索图书 | 2-借阅图书 | 3-归还图书 | 其他-返回上一级\n";
+        cin >> opt2;
+        switch (opt2)
+        {
+        case 1:
+            searchBook(library);
+            break;
+        case 2:
+            borrowBook(library);
+            break;
+        case 3:
+            returnBook(library);
+            break;
+        }
         break;
     }
     case 3:
-        searchBook(library);
+    {
+        cout << "请选择操作。\n1-增加学生账号 | 2-修改账号 | 其他-返回上一级\n";
+        cin >> opt2;
+        switch (opt2)
+        {
+        case 1:
+            studentList.push_back(student());
+            break;
+        case 2: //待做
+            break;
+        }
         break;
+    }
     case 4:
-        deleteBook(library);
+    {
+        cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅借阅记录 | 其他-返回上一级\n";
+        cin >> opt2;
+        int startTime, endTime;
+        cout << "请输入要查询的起止时间(时间戳格式)";
+        cin >> startTime >> endTime;
+        switch (opt2)
+        {
+        case 1:
+            library.displayLogRec(startTime, endTime);
+            break;
+        case 2:
+            library.displayBorRec(startTime, endTime);
+            break;
+        }
         break;
+    }
     case 5:
-        borrowBook(library);
-        break;
-    case 6:
-        returnBook(library);
-        break;
-    case 7:
-        studentList.push_back(student());
-        break;
-    case 9:
-        homepage(studentList, adminList, library);
-        break;
-    default:
+        accountSwitcher(studentList, adminList, library);
         return;
     }
+    homepage(studentList, adminList, library);
 }
 void admin::deleteBook(repo &library) //删除图书
 {

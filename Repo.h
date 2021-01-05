@@ -262,5 +262,4 @@ public:
     friend class admin;
     friend class student;
 };
-//repo library;
 #endif
