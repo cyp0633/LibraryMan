@@ -30,7 +30,7 @@ public:
         }
         cout << "成功创建账号。\n";
     }
-    student(int id, string pswd)
+    student(const long long int id, const string pswd)
     {
         username = id;
         password = pswd;
@@ -146,6 +146,7 @@ public:
     friend pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
     void modify();
     void printBorrowedBooks(repo &library);
+    friend void fileImportAccount(vector<student> &studentList, vector<admin> &adminList);
 };
 void student::modify()
 {
@@ -197,6 +198,7 @@ void student::homepage(vector<student> &studentList, vector<admin> &adminList, r
     case 4:
         accountSwitcher(studentList, adminList, library);
     }
+    homepage(studentList,adminList,library);
     return;
 }
 void student::printBorrowedBooks(repo &library)

@@ -210,7 +210,9 @@ public:
     }
     void fileImport() //文件导入书籍目录
     {
+        cout<<"即将从books.txt导入图书目录。\n";
         ifstream bookInput;
+        int originalNum=bookList.size();
         bookInput.open("books.txt",ios::in);
         string title;
         while(bookInput>>title)
@@ -221,6 +223,7 @@ public:
             getline(bookInput,bookList.back().category);
         }
         bookInput.close();
+        cout<<"已导入"<<bookList.size()-originalNum<<"本图书。\n";
     }
     friend class account;
     void deleteBook(int num)

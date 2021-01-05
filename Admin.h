@@ -32,7 +32,11 @@ public:
         }
         cout << "成功创建账号。\n";
     }
-    admin(int id, string pswd) {}
+    admin(const long long int &id, const string &pswd)
+    {
+        username=id;
+        password=pswd;
+    }
     void deleteBook(repo &library);
     int verify(long long int id, string pswd)
     {
@@ -144,6 +148,7 @@ public:
     friend pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
     void modify();
     void printBorrowedBooks(repo &library);
+    friend void fileImportAccount(vector<student> &studentList, vector<admin> &adminList);
 };
 void admin::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {

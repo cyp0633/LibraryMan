@@ -20,7 +20,7 @@ void fileImportAccount(vector<student> &studentList, vector<admin> &adminList)
     regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
     ifstream accountImport;
     accountImport.open("account.txt", ios::in);
-    accountImport>>username>>password;
+    accountImport >> username >> password;
     while (accountImport >> username >> password)
     {
         if (username == "STUDENT")
@@ -28,12 +28,14 @@ void fileImportAccount(vector<student> &studentList, vector<admin> &adminList)
             break;
         }
         studentList.push_back(student(stoi(username), password));
+        cout << studentList.back().username << ' ' << studentList.back().password << '\n'; //FOR DEBUG PURPOSES ONLY
         count++;
     }
     while (accountImport >> username >> password)
     {
         adminList.push_back(admin(stoi(username), password));
         count++;
+        cout << adminList.back().username << ' ' << adminList.back().password << '\n'; //FOR DEBUG PURPOSES ONLY
     }
     accountImport.close();
     cout << "导入完成，共导入" << count << "个账号。\n";
@@ -83,22 +85,22 @@ void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, rep
     accountSwitcher(studentList, adminList, library);
     return;
 }
-pair<bool,int> accountFinder(vector<student> &studentList,vector<admin> &adminList,long long int id)//账号查找
+pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id) //账号查找
 {
-    for(vector<student>::iterator i=studentList.begin();i!=studentList.end();i++)
+    for (vector<student>::iterator i = studentList.begin(); i != studentList.end(); i++)
     {
-        if(id==i->username)
+        if (id == i->username)
         {
-            return pair<bool,int>(0,&*i-&studentList[0]);//返回账号下标
+            return pair<bool, int>(0, &*i - &studentList[0]); //返回账号下标
         }
     }
-    for(vector<admin>::iterator i=adminList.begin();i!=adminList.end();i++)
+    for (vector<admin>::iterator i = adminList.begin(); i != adminList.end(); i++)
     {
-        if(id==i->username)
+        if (id == i->username)
         {
-            return pair<bool,int>(1,&*i-&adminList[0]);
+            return pair<bool, int>(1, &*i - &adminList[0]);
         }
     }
-    return pair<bool,int>(1,-1);
+    return pair<bool, int>(1, -1);
 }
 #endif
