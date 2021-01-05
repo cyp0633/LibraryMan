@@ -12,7 +12,7 @@ class admin;
 class student
 {
 private:
-    int username;           //用户名
+    long long int username;           //用户名
     string password;        //密码
     list<int> borrowedBook; //借了的书，使用链表存储，好删除
 public:
