@@ -35,10 +35,7 @@ public:
         username = id;
         password = pswd;
     }
-    void homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
-    {
-        return;
-    }
+    void homepage(vector<student> &studentList, vector<admin> &adminList, repo &library);
     int verify(long long int id, string pswd)
     {
         if (id == username)
@@ -146,8 +143,9 @@ public:
             }
         }
     }
-    friend pair<bool,int> accountFinder(vector<student> &studentList,vector<admin> &adminList,long long int id);
+    friend pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
     void modify();
+    void printBorrowedBooks(repo &library);
 };
 void student::modify()
 {
@@ -165,7 +163,48 @@ void student::modify()
         cin >> password;
         break;
     }
-    cout<<"修改完成\n";
+    cout << "修改完成\n";
     return;
+}
+void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library);
+void student::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
+{
+    int opt1, opt2;
+    cout << "您现在处于学生账户，请输入您的操作类别。\n1-图书操作 | 2-修改账号信息 | 3-查询本人借阅记录 | 4-退出账号\n";
+    cin >> opt1;
+    switch (opt1)
+    {
+    case 1:
+        cout << "请输入操作序号。\n1-搜索图书 | 2-借阅图书 | 3-归还图书 | 其他-回到上一级\n";
+        cin >> opt2;
+        switch (opt2)
+        {
+        case 1:
+            searchBook(library);
+            break;
+        case 2:
+            borrowBook(library);
+            break;
+        case 3:
+            returnBook(library);
+            break;
+        }
+        break;
+    case 2:
+        modify();
+    case 3:
+        printBorrowedBooks(library);
+    case 4:
+        accountSwitcher(studentList, adminList, library);
+    }
+    return;
+}
+void student::printBorrowedBooks(repo &library)
+{
+    cout << "已借阅书籍如下，共"<<borrowedBook.size()<<"本:\n";
+    for (list<int>::iterator i = borrowedBook.begin(); i != borrowedBook.end(); i++)
+    {
+        cout << "《" << library.bookList[*i].title << "》\n";
+    }
 }
 #endif

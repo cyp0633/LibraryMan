@@ -143,6 +143,7 @@ public:
     }
     friend pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
     void modify();
+    void printBorrowedBooks(repo &library);
 };
 void admin::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
@@ -230,7 +231,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
     }
     case 4:
     {
-        cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅借阅记录 | 其他-返回上一级\n";
+        cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅全馆借阅记录 | 3-查阅自身借阅记录 | 其他-返回上一级\n";
         cin >> opt2;
         int startTime, endTime;
         cout << "请输入要查询的起止时间(时间戳格式)";
@@ -242,6 +243,9 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
             break;
         case 2:
             library.displayBorRec(startTime, endTime);
+            break;
+        case 3:
+            printBorrowedBooks(library);
             break;
         }
         break;
@@ -276,7 +280,15 @@ void admin::modify()
         cin >> password;
         break;
     }
-    cout<<"修改完成\n";
+    cout << "修改完成\n";
     return;
+}
+void admin::printBorrowedBooks(repo &library)
+{
+    cout << "已借阅书籍如下，共"<<borrowedBook.size()<<"本:\n";
+    for (list<int>::iterator i = borrowedBook.begin(); i != borrowedBook.end(); i++)
+    {
+        cout << "《" << library.bookList[*i].title << "》\n";
+    }
 }
 #endif
