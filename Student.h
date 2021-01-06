@@ -193,10 +193,13 @@ void student::homepage(vector<student> &studentList, vector<admin> &adminList, r
         break;
     case 2:
         modify();
+        break;
     case 3:
         printBorrowedBooks(library);
+        break;
     case 4:
         accountSwitcher(studentList, adminList, library);
+        return;
     }
     homepage(studentList,adminList,library);
     return;

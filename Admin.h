@@ -239,7 +239,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
         cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅全馆借阅记录 | 3-查阅自身借阅记录 | 其他-返回上一级\n";
         cin >> opt2;
         int startTime, endTime;
-        cout << "请输入要查询的起止时间(时间戳格式)";
+        cout << "请输入要查询的起止时间(时间戳格式)，值均为0代表查询全部。";
         cin >> startTime >> endTime;
         switch (opt2)
         {
