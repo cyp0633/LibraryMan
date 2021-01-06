@@ -27,15 +27,13 @@ void fileImportAccount(vector<student> &studentList, vector<admin> &adminList)
         {
             break;
         }
-        studentList.push_back(student(stoi(username), password));
-        cout << studentList.back().username << ' ' << studentList.back().password << '\n'; //FOR DEBUG PURPOSES ONLY
+        adminList.push_back(admin(stoi(username), password));
         count++;
     }
     while (accountImport >> username >> password)
     {
-        adminList.push_back(admin(stoi(username), password));
+        studentList.push_back(student(stoi(username), password));
         count++;
-        cout << adminList.back().username << ' ' << adminList.back().password << '\n'; //FOR DEBUG PURPOSES ONLY
     }
     accountImport.close();
     cout << "导入完成，共导入" << count << "个账号。\n";

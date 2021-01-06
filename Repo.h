@@ -54,7 +54,7 @@ public:
         std::cout << "找到" << candidate.size() << "个序号符合的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(40) << left << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
+            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(60) << left << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
@@ -87,7 +87,7 @@ public:
         std::cout << "找到" << candidate.size() << "个书名匹配的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(40) << left << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
+            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(60) << left << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
@@ -121,7 +121,7 @@ public:
         std::cout << "找到" << candidate.size() << "个该作者出版的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(40) << left << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
+            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(60) << left << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
         }
         if (mode == 0)
         {
@@ -153,41 +153,51 @@ public:
         sort(candidate.begin(), candidate.end());
         std::cout << "找到了符合该分类的" << candidate.size() << "本书。\n";
         int i;
-        for (i = 0; i * 30 < candidate.size(); i++)
+        if (candidate.size() > 30)
         {
-            std::cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
-            for (int j = i * 30; j <= (i + 1) * 30; j++)
+            for (i = 0; i * 30 < candidate.size(); i++)
             {
-                std::cout << setw(4) << left << j + 1 << " : " << setw(40) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
-            }
-            if (mode == 1)
-            {
-                std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1，翻阅下一页:";
-                int temp;
-                cin >> temp;
-                if (temp != -1)
+                std::cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
+                for (int j = i * 30; j <= (i + 1) * 30; j++)
                 {
-                    return candidate[temp].second; //返回书籍的真正序号
+                    std::cout << setw(4) << left << j + 1 << " : " << setw(60) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+                }
+                if (mode == 1)
+                {
+                    std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1，翻阅下一页:";
+                    int temp;
+                    cin >> temp;
+                    if (temp != -1)
+                    {
+                        return candidate[temp].second; //返回书籍的真正序号
+                    }
+                }
+                else
+                {
+                    std::cout << "如果您未找到您要找的书，请输入-1；如果找到，请输入1:";
+                    int temp;
+                    cin >> temp;
+                    if (temp == 1)
+                    {
+                        return 0;
+                    }
                 }
             }
-            else
+            for (int j = (i - 1) * 30; j < candidate.size(); j++)
             {
-                std::cout << "如果您未找到您要找的书，请输入-1；如果找到，请输入1:";
-                int temp;
-                cin >> temp;
-                if (temp == -1)
-                {
-                    return 0;
-                }
+                std::cout << setw(4) << left << j + 1 << " : " << setw(60) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
             }
         }
-        for (int j = (i - 1) * 30; j < candidate.size(); j++)
+        else
         {
-            std::cout << setw(4) << left << j + 1 << " : " << setw(40) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+            for (int j=0;j<candidate.size();j++)
+            {
+                std::cout << setw(4) << left << j + 1 << " : " << setw(60) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+            }
         }
         if (mode == 1)
         {
-            std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出";
+            std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出\n";
             int temp;
             cin >> temp;
             if (temp != -1)
@@ -201,7 +211,7 @@ public:
         }
         else
         {
-            std::cout << "如果您未找到您要找的书，请输入-1以退出；如果找到，请输入1:";
+            std::cout << "请输入任意数字以退出。\n";
             int temp;
             cin >> temp;
             return 0;
