@@ -1,4 +1,4 @@
 ADMIN _
-136587 aja2489adl
+1 admin1
 STUDENT _
-87295 baljg389
+2 stu123

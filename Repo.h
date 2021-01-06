@@ -158,7 +158,7 @@ public:
             for (i = 0; i * 30 < candidate.size(); i++)
             {
                 std::cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
-                for (int j = i * 30; j <= (i + 1) * 30; j++)
+                for (int j = i * 30; j < (i + 1) * 30; j++)
                 {
                     std::cout << setw(4) << left << j + 1 << " : " << setw(60) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
                 }
@@ -169,7 +169,7 @@ public:
                     cin >> temp;
                     if (temp != -1)
                     {
-                        return candidate[temp].second; //返回书籍的真正序号
+                        return candidate[temp - 1].second; //返回书籍的真正序号
                     }
                 }
                 else
@@ -190,7 +190,7 @@ public:
         }
         else
         {
-            for (int j=0;j<candidate.size();j++)
+            for (int j = 0; j < candidate.size(); j++)
             {
                 std::cout << setw(4) << left << j + 1 << " : " << setw(60) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
             }
@@ -202,7 +202,7 @@ public:
             cin >> temp;
             if (temp != -1)
             {
-                return candidate[temp].second; //返回书籍的真正序号
+                return candidate[temp-1].second; //返回书籍的真正序号
             }
             else
             {
