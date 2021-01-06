@@ -34,8 +34,8 @@ public:
     }
     admin(const long long int &id, const string &pswd)
     {
-        username=id;
-        password=pswd;
+        username = id;
+        password = pswd;
     }
     void deleteBook(repo &library);
     int verify(long long int id, string pswd)
@@ -203,7 +203,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
         }
         break;
     }
-    case 3://账户操作
+    case 3: //账户操作
     {
         cout << "请选择操作。\n1-增加学生账号 | 2-修改账号 | 其他-返回上一级\n";
         cin >> opt2;
@@ -238,6 +238,10 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
     {
         cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅全馆借阅记录 | 3-查阅自身借阅记录 | 其他-返回上一级\n";
         cin >> opt2;
+        if(opt2>3||opt2<1)
+        {
+            break;
+        }
         int startTime, endTime;
         cout << "请输入要查询的起止时间(时间戳格式)，值均为0代表查询全部。";
         cin >> startTime >> endTime;
@@ -290,7 +294,7 @@ void admin::modify()
 }
 void admin::printBorrowedBooks(repo &library)
 {
-    cout << "已借阅书籍如下，共"<<borrowedBook.size()<<"本:\n";
+    cout << "已借阅书籍如下，共" << borrowedBook.size() << "本:\n";
     for (list<int>::iterator i = borrowedBook.begin(); i != borrowedBook.end(); i++)
     {
         cout << "《" << library.bookList[*i].title << "》\n";
