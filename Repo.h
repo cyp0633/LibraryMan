@@ -41,7 +41,7 @@ public:
         vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if ((!bookList[i].deleted) && kmp(bookList[i].num, target))
+            if ((!bookList[i].deleted) && kmp(target, bookList[i].num))
             {
                 candidate.push_back(i);
             }
@@ -54,7 +54,7 @@ public:
         std::cout << "找到" << candidate.size() << "个序号符合的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            std::cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
+            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(40) << left << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
@@ -74,7 +74,7 @@ public:
         vector<int> candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].title, target) && !bookList[i].deleted)
+            if (kmp(target, bookList[i].title) && !bookList[i].deleted)
             {
                 candidate.push_back(i);
             }
@@ -87,7 +87,7 @@ public:
         std::cout << "找到" << candidate.size() << "个书名匹配的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            std::cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
+            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(40) << left << bookList[candidate[i]].title << " 出版物号 ISBN/ISSN：" << bookList[candidate[i]].num << '\n';
         }
         if (mode == 0)
         {
@@ -121,7 +121,7 @@ public:
         std::cout << "找到" << candidate.size() << "个该作者出版的书籍，列表如下：\n";
         for (int i = 0; i < candidate.size(); i++)
         {
-            std::cout << i + 1 << '.' << fixed << setw(16) << left << "书名：" << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
+            std::cout << setw(4) << left << i + 1 << '.' << "书名：" << setw(40) << left << candidate[i].first.title << " 出版物号 ISBN/ISSN：" << candidate[i].first.num << '\n';
         }
         if (mode == 0)
         {
@@ -141,7 +141,7 @@ public:
         vector<pair<Book, int>> candidate;
         for (int i = 0; i < bookList.size(); i++)
         {
-            if (kmp(bookList[i].category, target) && !bookList[i].deleted)
+            if (kmp(target, bookList[i].category) && !bookList[i].deleted)
             {
                 candidate.push_back(pair<Book, int>(bookList[i], i));
             }
@@ -158,7 +158,7 @@ public:
             std::cout << "第" << i * 30 + 1 << " - " << (i + 1) * 30 << "本:\n";
             for (int j = i * 30; j <= (i + 1) * 30; j++)
             {
-                std::cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+                std::cout << setw(4) << left << j + 1 << " : " << setw(40) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
             }
             if (mode == 1)
             {
@@ -183,7 +183,7 @@ public:
         }
         for (int j = (i - 1) * 30; j < candidate.size(); j++)
         {
-            std::cout << j + 1 << " : " << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
+            std::cout << setw(4) << left << j + 1 << " : " << setw(40) << left << candidate[j].first.title << " ISBN/ISSN: " << candidate[j].first.num << '\n';
         }
         if (mode == 1)
         {
@@ -198,7 +198,6 @@ public:
             {
                 return -1;
             }
-            
         }
         else
         {
@@ -210,10 +209,10 @@ public:
     }
     void fileImport() //文件导入书籍目录
     {
-        cout<<"即将从books.txt导入图书目录。\n";
+        cout << "即将从books.txt导入图书目录。\n";
         ifstream bookInput;
-        int originalNum=bookList.size();
-        bookInput.open("books.txt",ios::in);
+        int originalNum = bookList.size();
+        bookInput.open("books.txt", ios::in);
         string title;
         while (bookInput >> title)
         {
@@ -223,7 +222,7 @@ public:
             getline(bookInput, bookList.back().category);
         }
         bookInput.close();
-        cout<<"已导入"<<bookList.size()-originalNum<<"本图书。\n";
+        cout << "已导入" << bookList.size() - originalNum << "本图书。\n";
     }
     friend class account;
     void deleteBook(int num)

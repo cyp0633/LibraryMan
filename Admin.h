@@ -203,7 +203,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
         }
         break;
     }
-    case 3:
+    case 3://账户操作
     {
         cout << "请选择操作。\n1-增加学生账号 | 2-修改账号 | 其他-返回上一级\n";
         cin >> opt2;
