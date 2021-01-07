@@ -91,7 +91,7 @@ public:
         }
         return;
     }
-    void searchBook(repo library) //找书功能
+    void searchBook(repo &library) //找书功能
     {
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type;
@@ -120,7 +120,7 @@ public:
             library.searchCategory(target, 0);
         }
     }
-    void returnBook(repo library)
+    void returnBook(repo &library)
     {
         int bookNum;
         cout << "请输入想还的书的馆内编号:";
