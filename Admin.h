@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include<cstdlib>
 #include "Repo.h"
 #include "Student.h"
 class repo;
@@ -152,6 +153,7 @@ public:
 };
 void admin::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
+    system("cls");
     cout << "您现在处于管理员账户。请输入您的操作类别。\n1-书库操作 | 2-图书操作 | 3-账户操作 | 4-记录查询 | 5-退出账号\n";
     int opt1, opt2;
     cin >> opt1;
