@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include "Admin.h"
 #include "Book.h"
 #include "KMP.h"
@@ -12,6 +13,7 @@ class student;
 class admin;
 int main()
 {
+    system("cls");
     vector<student> studentList;
     vector<admin> adminList;
     repo library;
@@ -21,13 +23,13 @@ int main()
     cin >> newAccountMethod;
     if (newAccountMethod == 1)
     {
-        fileImportAccount(studentList,adminList);
+        fileImportAccount(studentList, adminList);
     }
     else
     {
         adminList.push_back(admin());
     }
-    cout<<"正在跳转登录界面。\n";
-    accountSwitcher(studentList,adminList,library);
+    cout << "正在跳转登录界面。\n";
+    accountSwitcher(studentList, adminList, library);
     return 0;
 }
