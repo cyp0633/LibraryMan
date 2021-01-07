@@ -3,13 +3,14 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include<cstdlib>
+#include <cstdlib>
 #include "Repo.h"
 #include "Student.h"
 class repo;
 class student;
 using namespace std;
 void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library);
+void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, repo &library);
 pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
 class admin
 {
@@ -153,7 +154,6 @@ public:
 };
 void admin::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
-    system("cls");
     cout << "您现在处于管理员账户。请输入您的操作类别。\n1-书库操作 | 2-图书操作 | 3-账户操作 | 4-记录查询 | 5-退出账号\n";
     int opt1, opt2;
     cin >> opt1;
@@ -240,7 +240,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
     {
         cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅全馆借阅记录 | 3-查阅自身借阅记录 | 其他-返回上一级\n";
         cin >> opt2;
-        if(opt2>3||opt2<1)
+        if (opt2 > 3 || opt2 < 1)
         {
             break;
         }
@@ -262,9 +262,10 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
         break;
     }
     case 5:
-        accountSwitcher(studentList, adminList, library);
+        accountSwitcherNew(studentList, adminList, library);
         return;
     }
+    system("cls");
     homepage(studentList, adminList, library);
 }
 void admin::deleteBook(repo &library) //删除图书

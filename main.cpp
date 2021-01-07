@@ -30,6 +30,6 @@ int main()
         adminList.push_back(admin());
     }
     cout << "正在跳转登录界面。\n";
-    accountSwitcher(studentList, adminList, library);
+    accountSwitcherNew(studentList, adminList, library);
     return 0;
 }

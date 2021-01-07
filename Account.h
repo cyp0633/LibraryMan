@@ -83,6 +83,49 @@ void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, rep
     accountSwitcher(studentList, adminList, library);
     return;
 }
+void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, repo &library) //新版账号登陆与切换
+{
+    cout << "欢迎登录，请输入您的账号。\n";
+    long long int id;
+    string pswd;
+    cin >> id;
+    cout << "请输入密码。\n";
+    cin >> pswd;
+    pair<bool, int> target = accountFinder(studentList, adminList, id);
+    if (target.first) //管理员账号
+    {
+        if (target.second == -1)
+        {
+            cout << "未找到账号，请重新输入。\n";
+        }
+        else
+        {
+            if (adminList[target.second].verify(id, pswd) == 1)
+            {
+                cout << "登陆成功！您的账号是管理员账号。\n";
+                adminList[target.second].homepage(studentList, adminList, library);
+            }
+            else
+            {
+                cout << "密码错误，请重新登陆。\n";
+            }
+        }
+    }
+    else
+    {
+        if (studentList[target.second].verify(id, pswd) == 1)
+        {
+            cout << "登陆成功！您的账号是学生账号。\n";
+            studentList[target.second].homepage(studentList, adminList, library);
+        }
+        else
+        {
+            cout << "密码错误，请重新登陆。\n";
+        }
+    }
+    accountSwitcherNew(studentList, adminList, library);
+    return;
+}
 pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id) //账号查找
 {
     for (vector<student>::iterator i = studentList.begin(); i != studentList.end(); i++)

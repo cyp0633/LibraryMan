@@ -168,9 +168,9 @@ void student::modify()
     return;
 }
 void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library);
+void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, repo &library);
 void student::homepage(vector<student> &studentList, vector<admin> &adminList, repo &library)
 {
-    system("cls");
     int opt1, opt2;
     cout << "您现在处于学生账户，请输入您的操作类别。\n1-图书操作 | 2-修改账号信息 | 3-查询本人借阅记录 | 4-退出账号\n";
     cin >> opt1;
@@ -199,9 +199,10 @@ void student::homepage(vector<student> &studentList, vector<admin> &adminList, r
         printBorrowedBooks(library);
         break;
     case 4:
-        accountSwitcher(studentList, adminList, library);
+        accountSwitcherNew(studentList, adminList, library);
         return;
     }
+    system("cls");
     homepage(studentList, adminList, library);
     return;
 }
