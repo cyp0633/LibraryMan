@@ -40,7 +40,7 @@ void fileImportAccount(vector<student> &studentList, vector<admin> &adminList)
     return;
 }
 void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, repo &library)
-{
+{//暂时不会再维护。不会加入登陆记录。
     cout << "欢迎登录，请输入您的账号。\n";
     long long int id;
     string pswd;
@@ -90,8 +90,9 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
     string pswd;
     cin >> id;
     cout << "请输入密码。\n";
-    cin >> pswd;
     pair<bool, int> target = accountFinder(studentList, adminList, id);
+    reinput_password:
+    cin >> pswd;
     if (target.first) //1代表管理员账号
     {
         if (target.second == -1)
@@ -108,7 +109,8 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
             }
             else
             {
-                cout << "密码错误，请重新登陆。\n";
+                cout << "密码错误，请重新输入。\n";
+                goto reinput_password;
             }
         }
     }
@@ -122,7 +124,8 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
         }
         else
         {
-            cout << "密码错误，请重新登陆。\n";
+            cout << "密码错误，请重新输入。\n";
+            goto reinput_password;
         }
     }
     accountSwitcherNew(studentList, adminList, library);
