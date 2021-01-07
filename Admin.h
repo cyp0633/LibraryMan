@@ -4,6 +4,8 @@
 #include <vector>
 #include <list>
 #include <cstdlib>
+#include <iomanip>
+#include <ctime>
 #include "Repo.h"
 #include "Student.h"
 class repo;
@@ -91,7 +93,7 @@ public:
         {
             borrowedBook.push_back(bookNum);
             cout << "您借走的书馆内编号为" << bookNum << "，请妥善保管此数字，还书时将用到。";
-            library.borRec.push_back(borrowRecord(time(NULL), username, bookNum));
+            library.addBorRec(time(NULL),username,bookNum,1);
         }
         return;
     }
@@ -265,7 +267,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
         accountSwitcherNew(studentList, adminList, library);
         return;
     }
-    system("cls");
+    //system("cls");
     homepage(studentList, adminList, library);
 }
 void admin::deleteBook(repo &library) //删除图书

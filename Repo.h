@@ -6,20 +6,23 @@
 #include <algorithm>
 #include <iomanip>
 #include <fstream>
+#include <ctime>
 #include "Book.h"
 #include "KMP.h"
 struct logRecord //在馆记录
 {
-    int time; //时间
-    int id;   //人员ID
-    logRecord(int t, int i) : time(t), id(i) {}
+    time_t time;      //时间
+    long long int id; //人员ID
+    bool type;        //账户类型，1是管理员
+    logRecord(const time_t &t, const long long int &i, const bool &tp) : time(t), id(i), type(tp) {}
 };
 struct borrowRecord //借阅记录
 {
-    int time;
-    int id;
+    time_t time;
+    long long int id;
+    bool type;
     int bookNum;
-    borrowRecord(int t, int i, int n) : time(t), id(i), bookNum(n) {}
+    borrowRecord(const time_t &t, const long long int &i, const int &n, const bool &tp) : time(t), id(i), bookNum(n), type(tp) {}
 };
 class repo //书库
 {
@@ -202,7 +205,7 @@ public:
             cin >> temp;
             if (temp != -1)
             {
-                return candidate[temp-1].second; //返回书籍的真正序号
+                return candidate[temp - 1].second; //返回书籍的真正序号
             }
             else
             {
@@ -250,7 +253,7 @@ public:
         {
             if (i->time >= startTime && i->time <= endTime)
             {
-                std::cout << i->time << " - " << i->id << "入馆\n"; //找时候做一下时间戳转换为标准时间
+                std::cout << put_time(localtime(&(i->time)), "%c %Z") << " - " << setw(15) << right << i->id << "入馆\n"; //找时候做一下时间戳转换为标准时间
             }
         }
         return;
@@ -266,12 +269,23 @@ public:
         {
             if (i->time >= startTime && i->time <= endTime)
             {
-                std::cout << i->time << " - " << i->id << "借走了\"" << bookList[i->bookNum].title << "\"\n"; //找时候做一下时间戳转换为标准时间
+                std::cout << put_time(localtime(&(i->time)), "%c %Z") << " - " << setw(15) << right << i->id << "借走了\"" << bookList[i->bookNum].title << "\"\n"; //找时候做一下时间戳转换为标准时间
             }
         }
         return;
     }
     friend class admin;
     friend class student;
+    void addLogRec(const time_t &t, const long long int &i, const bool &tp);
+    void addBorRec(const time_t &t, const long long int &i, const int &n, const bool &tp);
 };
+void repo::addLogRec(const time_t &t, const long long int &i, const bool &tp)
+{
+    logRec.push_back(logRecord(t, i, tp));
+    return;
+}
+void repo::addBorRec(const time_t &t, const long long int &i, const int &n, const bool &tp)
+{
+    borRec.push_back(borrowRecord(t, i, n, tp));
+}
 #endif

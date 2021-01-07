@@ -87,7 +87,7 @@ public:
         {
             borrowedBook.push_back(bookNum);
             cout << "您借走的书馆内编号为" << bookNum << "，请妥善保管此数字，还书时将用到。";
-            library.borRec.push_back(borrowRecord(time(NULL), username, bookNum));
+            library.addBorRec(time(NULL),username,bookNum,0);
         }
         return;
     }
@@ -202,7 +202,7 @@ void student::homepage(vector<student> &studentList, vector<admin> &adminList, r
         accountSwitcherNew(studentList, adminList, library);
         return;
     }
-    system("cls");
+    //system("cls");
     homepage(studentList, adminList, library);
     return;
 }
