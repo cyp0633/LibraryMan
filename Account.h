@@ -92,7 +92,7 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
     cout << "请输入密码。\n";
     cin >> pswd;
     pair<bool, int> target = accountFinder(studentList, adminList, id);
-    if (target.first) //管理员账号
+    if (target.first) //1代表管理员账号
     {
         if (target.second == -1)
         {
@@ -102,6 +102,7 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
         {
             if (adminList[target.second].verify(id, pswd) == 1)
             {
+                library.addLogRec(time(NULL),id,1);
                 cout << "登陆成功！您的账号是管理员账号。\n";
                 adminList[target.second].homepage(studentList, adminList, library);
             }
@@ -115,6 +116,7 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
     {
         if (studentList[target.second].verify(id, pswd) == 1)
         {
+            library.addLogRec(time(NULL),id,0);
             cout << "登陆成功！您的账号是学生账号。\n";
             studentList[target.second].homepage(studentList, adminList, library);
         }

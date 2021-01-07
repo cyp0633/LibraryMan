@@ -13,7 +13,7 @@ class student;
 class admin;
 int main()
 {
-    system("cls");
+    //system("cls");
     vector<student> studentList;
     vector<admin> adminList;
     repo library;
