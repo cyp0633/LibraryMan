@@ -114,7 +114,7 @@ public:
                 candidate.push_back(pair<Book, int>(bookList[i], i));
             }
         }
-        sort(candidate.begin(), candidate.end()); //运算符重载过啦，根据名称排序
+        stable_sort(candidate.begin(), candidate.end()); //运算符重载过啦，根据名称排序
         if (candidate.size() == 0)
         {
             std::cout << "没有找到由此作者撰写的书籍。\n";
@@ -134,7 +134,7 @@ public:
         {
             std::cout << "请输入想借阅的书籍序号: ";
             int temp = getInt(temp);
-            
+
             return candidate[temp - 1].second;
         }
     }
@@ -152,7 +152,7 @@ public:
         {
             std::cout << "书库中没有您想找到的分类。\n";
         }
-        sort(candidate.begin(), candidate.end());
+        stable_sort(candidate.begin(), candidate.end());
         std::cout << "找到了符合该分类的" << candidate.size() << "本书。\n";
         int i;
         if (candidate.size() > 30)
@@ -199,7 +199,7 @@ public:
         {
             std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出\n";
             int temp = getInt(temp);
-             
+
             if (temp != -1)
             {
                 return candidate[temp - 1].second; //返回书籍的真正序号
@@ -213,7 +213,7 @@ public:
         {
             std::cout << "请输入任意数字以退出。\n";
             int temp = getInt(temp);
-             
+
             return 0;
         }
     }
@@ -222,14 +222,13 @@ public:
         cout << "即将从books.txt导入图书目录。\n";
         ifstream bookInput;
         int originalNum = bookList.size();
-        bookInput.open("books.txt", ios::in);
+        bookInput.open("NewBooks.txt", ios::in);
         string title;
         while (bookInput >> title)
         {
             bookList.push_back(Book());
             bookList.back().title = title;
-            bookInput >> bookList.back().num >> bookList.back().author; //ISBN和ISSN的处理怎么搞？
-            getline(bookInput, bookList.back().category);
+            bookInput >> bookList.back().num >> bookList.back().author >> bookList.back().category >> bookList.back().remainingNum;
         }
         bookInput.close();
         cout << "已导入" << bookList.size() - originalNum << "本图书。\n";

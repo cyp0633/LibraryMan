@@ -202,7 +202,6 @@ void student::homepage(vector<student> &studentList, vector<admin> &adminList, r
         accountSwitcherNew(studentList, adminList, library);
         return;
     }
-    //system("cls");
     homepage(studentList, adminList, library);
     return;
 }

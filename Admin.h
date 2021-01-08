@@ -269,7 +269,6 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
         accountSwitcherNew(studentList, adminList, library);
         return;
     }
-    //system("cls");
     homepage(studentList, adminList, library);
 }
 void admin::deleteBook(repo &library) //删除图书

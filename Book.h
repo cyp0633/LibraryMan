@@ -2,12 +2,12 @@
 #define _BOOK_H_INCLUDED
 #include <iostream>
 #include <string>
-#include"error.h"
+#include "error.h"
 using namespace std;
 class Book
 {
 private:
-    bool borrowed; //是否被借走了
+    //bool borrowed; //是否被借走了
 
 public:
     string title;    //题名
@@ -15,16 +15,25 @@ public:
     string num;      //ISBN/ISSN
     string author;   //作者
     string category; //三级分类
-    bool deleted;    //是否被删除
-    Book()//自动导入用这个构造
+    int remainingNum;
+    bool deleted; //是否被删除
+    Book()        //自动导入用这个构造
     {
-        deleted=false;
-        borrowed=false;
-    }
-    Book(int n)//手动添加用这个构造
-    {
-        borrowed = false;
         deleted = false;
+    }
+    Book(int n) //手动添加用这个构造
+    {
+        deleted = false;
+        cout << "请输入书名:\n";
+        cin >> title;
+        cout << "请输入作者:\n";
+        cin >> author;
+        cout << "请输入ISBN/ISSN:\n";
+        cin >> num;
+        cout << "请输入分类:";
+        cin >> category;
+        cout << "请输入库存数量:\n";
+        cin >> remainingNum;
         return;
     }
     void printInfo()
@@ -40,59 +49,46 @@ public:
         }
         cout << "下面是本书的基本信息。\n";
         cout << *this;
-        cout << "请输入您想修改的信息对应的序号：\n1-题目 | 2-ISBN/ISSN | 3-作者 | 4-分类\n";
+        cout << "请输入您想修改的信息对应的序号：\n1-题目 | 2-ISBN/ISSN | 3-作者 | 4-分类 | 5-剩余数量\n";
         int infoNum;
         infoNum = getInt(infoNum);
         switch (infoNum)
         {
         case 1:
-            cout << "请输入新题目:";
+            cout << "请输入新题目:\n";
             cin >> title;
             break;
         case 2:
-            cout << "请输入新ISBN/ISSN:";
+            cout << "请输入新ISBN/ISSN:\n";
             cin >> num;
             break;
         case 3:
-            cout << "请输入新作者信息:";
+            cout << "请输入新作者信息:\n";
             cin >> author;
             break;
         case 4:
-            cout << "请输入新分类:";
+            cout << "请输入新分类:\n";
             cin >> category;
             break;
+        case 5:
+            cout << "请输入新数量:\n";
         }
         return;
     }
     bool borrow() //借书
     {
-        if (deleted)
+        if (!remainingNum)
         {
-            cout << "本书不存在！";
+            cout << "抱歉，此书已被借完或者被删除。\n";
             return false;
         }
-        if (borrowed)
-        {
-            cout << "抱歉，此书已被借走。\n";
-            return false;
-        }
-        borrowed = true;
+        remainingNum++;
         cout << "成功借书！\n";
         return true;
     }
     bool returnBook() //还书
     {
-        if (deleted)
-        {
-            cout << "本书不存在！";
-            return false;
-        }
-        if (!borrowed)
-        {
-            cout << "这本书并没有被借走，你是想再送给我们一本嘛？\n";
-            return false;
-        }
-        borrowed = false;
+        remainingNum++;
         cout << "成功还书！\n";
         return true;
     }
@@ -121,6 +117,7 @@ ostream &operator<<(ostream &output, Book b) //输出书本信息
         output << "ISBN:" << b.num << '\n';
     }
     output << "分类:" << b.category << '\n';
+    output << "剩余本数:" << b.remainingNum << '\n';
     return output;
 }
 #endif
