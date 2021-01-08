@@ -2,6 +2,7 @@
 #define _BOOK_H_INCLUDED
 #include <iostream>
 #include <string>
+#include"error.h"
 using namespace std;
 class Book
 {
@@ -41,7 +42,7 @@ public:
         cout << *this;
         cout << "请输入您想修改的信息对应的序号：\n1-题目 | 2-ISBN/ISSN | 3-作者 | 4-分类\n";
         int infoNum;
-        cin >> infoNum;
+        infoNum = getInt(infoNum);
         switch (infoNum)
         {
         case 1:

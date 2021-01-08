@@ -9,6 +9,7 @@
 #include <ctime>
 #include "Book.h"
 #include "KMP.h"
+#include "error.h"
 struct logRecord //在馆记录
 {
     time_t time;      //时间
@@ -67,8 +68,7 @@ public:
         else
         {
             std::cout << "请输入想借阅的书籍序号: ";
-            int temp;
-            cin >> temp;
+            int temp = getInt(temp);
             return candidate[temp - 1];
         }
     }
@@ -100,8 +100,7 @@ public:
         else
         {
             cout << "请输入想查阅的书籍序号: ";
-            int temp;
-            cin >> temp;
+            int temp = getInt(temp);
             return candidate[temp - 1]; //这个才是真正的书籍序号
         }
     }
@@ -134,8 +133,8 @@ public:
         else
         {
             std::cout << "请输入想借阅的书籍序号: ";
-            int temp;
-            cin >> temp;
+            int temp = getInt(temp);
+            
             return candidate[temp - 1].second;
         }
     }
@@ -168,8 +167,7 @@ public:
                 if (mode == 1)
                 {
                     std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1，翻阅下一页:";
-                    int temp;
-                    cin >> temp;
+                    int temp = getInt(temp);
                     if (temp != -1)
                     {
                         return candidate[temp - 1].second; //返回书籍的真正序号
@@ -178,8 +176,7 @@ public:
                 else
                 {
                     std::cout << "如果您未找到您要找的书，请输入-1；如果找到，请输入1:";
-                    int temp;
-                    cin >> temp;
+                    int temp = getInt(temp);
                     if (temp == 1)
                     {
                         return 0;
@@ -201,8 +198,8 @@ public:
         if (mode == 1)
         {
             std::cout << "请输入您要查阅的书籍序号。如未找到，请输入-1退出\n";
-            int temp;
-            cin >> temp;
+            int temp = getInt(temp);
+             
             if (temp != -1)
             {
                 return candidate[temp - 1].second; //返回书籍的真正序号
@@ -215,8 +212,8 @@ public:
         else
         {
             std::cout << "请输入任意数字以退出。\n";
-            int temp;
-            cin >> temp;
+            int temp = getInt(temp);
+             
             return 0;
         }
     }

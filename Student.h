@@ -59,7 +59,7 @@ public:
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type, bookNum;
         string target;
-        cin >> type;
+        type = getInt(type);
         switch (type)
         {
         case 1:
@@ -96,7 +96,7 @@ public:
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type;
         string target;
-        cin >> type;
+        type = getInt(type);
         switch (type)
         {
         case 1:
@@ -152,7 +152,7 @@ void student::modify()
 {
     cout << "该账号学号为" << username << ",密码为" << password << "。您想修改什么？\n1-学号 | 2-密码\n";
     int opt;
-    cin >> opt;
+    opt = getInt(opt);
     switch (opt)
     {
     case 1:
@@ -173,12 +173,12 @@ void student::homepage(vector<student> &studentList, vector<admin> &adminList, r
 {
     int opt1, opt2;
     cout << "您现在处于学生账户，请输入您的操作类别。\n1-图书操作 | 2-修改账号信息 | 3-查询本人借阅记录 | 4-退出账号\n";
-    cin >> opt1;
+    opt1 = getInt(opt1);
     switch (opt1)
     {
     case 1:
         cout << "请输入操作序号。\n1-搜索图书 | 2-借阅图书 | 3-归还图书 | 其他-回到上一级\n";
-        cin >> opt2;
+        opt2 = getInt(opt2);
         switch (opt2)
         {
         case 1:

@@ -8,6 +8,7 @@
 #include <ctime>
 #include "Repo.h"
 #include "Student.h"
+#include"error.h"
 class repo;
 class student;
 using namespace std;
@@ -25,7 +26,7 @@ public:
     admin()
     {
         cout << "请输入学工号数字:\n";
-        cin >> username;
+        username = getInt(username);
         cout << "请输入密码。\n要求：字母开头，可以包含字母/数字/下划线，6-17位：\n";
         cin >> password;
         regex passFormat("^[a-zA-Z][a-zA-Z0-9_]{5,17}$");
@@ -65,28 +66,28 @@ public:
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type, bookNum;
         string target;
-        cin >> type;
+        type = getInt(type);
         switch (type)
         {
         case 1:
             cout << "请输入您想查找的题名:";
-            cin >> target;
+            target = getInt(target);
             bookNum = library.searchTitle(target, 1);
 
             break;
         case 3:
             cout << "请输入您想查找的作者:";
-            cin >> target;
+            target = getInt(target);
             bookNum = library.searchAuthor(target, 1);
             break;
         case 2:
             cout << "请输入您想查找的ISBN/ISSN，记得输入中间的连字符:";
-            cin >> target;
+            target = getInt(target);
             bookNum = library.searchISBN(target, 1);
             break;
         case 4:
             cout << "请输入您感兴趣的分类:";
-            cin >> target;
+            target = getInt(target);
             bookNum = library.searchCategory(target, 1);
         }
         if (library.bookList[bookNum].borrow()) //书被成功借走，会返回true，这样才会计入借走的列表
@@ -102,7 +103,7 @@ public:
         cout << "您想怎样找到您想要的书？\n1.题名 | 2.ISBN/ISSN | 3.作者 | 4.分类号\n对于分类号，您可以使用任一级分类查找；作者无法模糊查找，必须匹配名字；题名和ISBN/ISSN可以模糊匹配，您只需要输入一部分。\n请输入您想查找的类型前的数字：";
         int type;
         string target;
-        cin >> type;
+        type = getInt(type);
         switch (type)
         {
         case 1:
@@ -130,7 +131,7 @@ public:
     {
         int bookNum;
         cout << "请输入想还的书的馆内编号:";
-        cin >> bookNum;
+        bookNum = getInt(bookNum);
         list<int>::iterator i;
         for (i = borrowedBook.begin(); i != borrowedBook.end(); i++)
         {
@@ -158,13 +159,13 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
 {
     cout << "您现在处于管理员账户。请输入您的操作类别。\n1-书库操作 | 2-图书操作 | 3-账户操作 | 4-记录查询 | 5-退出账号\n";
     int opt1, opt2;
-    cin >> opt1;
+    opt1 = getInt(opt1);
     switch (opt1)
     {
     case 1: //书库操作
     {
         cout << "请选择操作。\n1-手动添加图书 | 2-修改图书 | 3-从文件导入图书 | 4-删除图书 | 其他-返回上一级\n";
-        cin >> opt2;
+        opt2 = getInt(opt2);
         switch (opt2)
         {
         case 1:
@@ -192,7 +193,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
     case 2: //图书操作
     {
         cout << "请选择操作。\n1-搜索图书 | 2-借阅图书 | 3-归还图书 | 其他-返回上一级\n";
-        cin >> opt2;
+        opt2 = getInt(opt2);
         switch (opt2)
         {
         case 1:
@@ -210,7 +211,7 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
     case 3: //账户操作
     {
         cout << "请选择操作。\n1-增加学生账号 | 2-修改账号 | 其他-返回上一级\n";
-        cin >> opt2;
+        opt2 = getInt(opt2);
         switch (opt2)
         {
         case 1:
@@ -241,14 +242,15 @@ void admin::homepage(vector<student> &studentList, vector<admin> &adminList, rep
     case 4:
     {
         cout << "请选择操作。\n1-查阅入馆记录 | 2-查阅全馆借阅记录 | 3-查阅自身借阅记录 | 其他-返回上一级\n";
-        cin >> opt2;
+        opt2 = getInt(opt2);
         if (opt2 > 3 || opt2 < 1)
         {
             break;
         }
         int startTime, endTime;
         cout << "请输入要查询的起止时间(时间戳格式)，值均为0代表查询全部。";
-        cin >> startTime >> endTime;
+        startTime = getInt(startTime);
+        endTime = getInt(endTime);
         switch (opt2)
         {
         case 1:
@@ -282,7 +284,7 @@ void admin::modify()
 {
     cout << "该账号学号为" << username << ",密码为" << password << "。您想修改什么？\n1-学号 | 2-密码\n";
     int opt;
-    cin >> opt;
+    opt = getInt(opt);
     switch (opt)
     {
     case 1:

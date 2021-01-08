@@ -8,6 +8,7 @@
 #include "Repo.h"
 #include "Student.h"
 #include "Admin.h"
+#include "error.h"
 using namespace std;
 class student;
 class admin;
@@ -44,7 +45,7 @@ void accountSwitcher(vector<student> &studentList, vector<admin> &adminList, rep
     cout << "欢迎登录，请输入您的账号。\n";
     long long int id;
     string pswd;
-    cin >> id;
+    id = getInt(id);
     cout << "请输入密码。\n";
     cin >> pswd;
     for (vector<student>::iterator i = studentList.begin(); i != studentList.end(); i++)
@@ -88,7 +89,7 @@ void accountSwitcherNew(vector<student> &studentList, vector<admin> &adminList, 
     cout << "欢迎登录，请输入您的账号。\n";
     long long int id;
     string pswd;
-    cin >> id;
+    id = getInt(id);
     cout << "请输入密码。\n";
     pair<bool, int> target = accountFinder(studentList, adminList, id);
     reinput_password:

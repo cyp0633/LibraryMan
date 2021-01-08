@@ -8,6 +8,7 @@
 #include "Repo.h"
 #include "Student.h"
 #include "Account.h"
+#include "error.h"
 using namespace std;
 class student;
 class admin;
@@ -18,9 +19,8 @@ int main()
     vector<admin> adminList;
     repo library;
     cout << "您想要导入账号数据，还是创建一个新设置？\n1-从文件导入账号数据 | 2-创建新账号数据\n";
-    int newAccountMethod;
     std::cout << "需要创建第一个管理员账户才可继续。\n";
-    cin >> newAccountMethod;
+    int newAccountMethod = getInt(newAccountMethod);
     if (newAccountMethod == 1)
     {
         fileImportAccount(studentList, adminList);
