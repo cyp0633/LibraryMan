@@ -222,7 +222,7 @@ public:
         cout << "即将从books.txt导入图书目录。\n";
         ifstream bookInput;
         int originalNum = bookList.size();
-        bookInput.open("NewBooks.txt", ios::in);
+        bookInput.open("books.txt", ios::in);
         string title;
         while (bookInput >> title)
         {
