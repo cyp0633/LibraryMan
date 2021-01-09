@@ -86,7 +86,6 @@ public:
         if (library.bookList[bookNum].borrow()) //书被成功借走，会返回true，这样才会计入借走的列表
         {
             borrowedBook.push_back(bookNum);
-            cout << "您借走的书馆内编号为" << bookNum << "，请妥善保管此数字，还书时将用到。";
             library.addBorRec(time(NULL),username,bookNum,0);
         }
         return;
@@ -120,29 +119,7 @@ public:
             library.searchCategory(target, 0);
         }
     }
-    void returnBook(repo &library)
-    {
-        int bookNum;
-        cout << "请输入想还的书的馆内编号:";
-        cin >> bookNum;
-        list<int>::iterator i;
-        for (i = borrowedBook.begin(); i != borrowedBook.end(); i++)
-        {
-            if (*i == bookNum) //找到了要还的书
-            {
-                if (library.bookList[bookNum].returnBook())
-                {
-                    borrowedBook.erase(i);
-                    cout << "成功还书!\n";
-                }
-                else
-                {
-                    cout << "还书不成功。\n";
-                }
-                break;
-            }
-        }
-    }
+    void returnBook(repo &library);
     friend pair<bool, int> accountFinder(vector<student> &studentList, vector<admin> &adminList, long long int id);
     void modify();
     void printBorrowedBooks(repo &library);
@@ -212,5 +189,27 @@ void student::printBorrowedBooks(repo &library)
     {
         cout << "《" << library.bookList[*i].title << "》\n";
     }
+}
+void student::returnBook(repo &library)
+{
+    cout<<"这是您目前已借的书目录。\n";
+    int target,borrowCount=0;
+    list<int>::iterator i;
+    for(i=borrowedBook.begin();i!=borrowedBook.end();i++)
+    {
+        borrowCount++;
+        cout<<setw(4)<<left<<borrowCount<<" - \""<<library.bookList[*i].title<<"\"\n";
+    }
+    cout<<"请选择要还的书。";
+    cin>>target;
+    // i=borrowedBook.begin()+target-1;
+    i=borrowedBook.begin();
+    for(int x=0;x<target-1;x++)
+    {
+        i++;
+    }
+    library.bookList[*i].returnBook();
+    borrowedBook.erase(i);
+    return;
 }
 #endif
