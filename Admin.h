@@ -8,7 +8,7 @@
 #include <ctime>
 #include "Repo.h"
 #include "Student.h"
-#include"error.h"
+#include "error.h"
 class repo;
 class student;
 using namespace std;
@@ -90,10 +90,14 @@ public:
             target = getInt(target);
             bookNum = library.searchCategory(target, 1);
         }
+        if (bookNum == -1) //找不到这本书
+        {
+            return;
+        }
         if (library.bookList[bookNum].borrow()) //书被成功借走，会返回true，这样才会计入借走的列表
         {
             borrowedBook.push_back(bookNum);
-            library.addBorRec(time(NULL),username,bookNum,1);
+            library.addBorRec(time(NULL), username, bookNum, 1);
         }
         return;
     }
@@ -285,19 +289,19 @@ void admin::printBorrowedBooks(repo &library)
 }
 void admin::returnBook(repo &library)
 {
-    cout<<"这是您目前已借的书目录。\n";
-    int target,borrowCount=0;
+    cout << "这是您目前已借的书目录。\n";
+    int target, borrowCount = 0;
     list<int>::iterator i;
-    for(i=borrowedBook.begin();i!=borrowedBook.end();i++)
+    for (i = borrowedBook.begin(); i != borrowedBook.end(); i++)
     {
         borrowCount++;
-        cout<<setw(4)<<left<<borrowCount<<" - \""<<library.bookList[*i].title<<"\"\n";
+        cout << setw(4) << left << borrowCount << " - \"" << library.bookList[*i].title << "\"\n";
     }
-    cout<<"请选择要还的书。";
-    cin>>target;
+    cout << "请选择要还的书。";
+    cin >> target;
     // i=borrowedBook.begin()+target-1;
-    i=borrowedBook.begin();
-    for(int x=0;x<target-1;x++)
+    i = borrowedBook.begin();
+    for (int x = 0; x < target - 1; x++)
     {
         i++;
     }
