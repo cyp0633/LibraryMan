@@ -8,7 +8,7 @@
 #include <ctime>
 #include "Repo.h"
 #include "Student.h"
-#include "error.h"
+#include "Error.h"
 class repo;
 class student;
 using namespace std;

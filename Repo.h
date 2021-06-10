@@ -9,7 +9,7 @@
 #include <ctime>
 #include "Book.h"
 #include "KMP.h"
-#include "error.h"
+#include "Error.h"
 struct logRecord //在馆记录
 {
     time_t time;      //时间
@@ -106,7 +106,7 @@ public:
     }
     int searchAuthor(string target, bool mode) //图书搜索功能3：作者。作者名必须精确匹配。如果由借阅函数调用，mode=1，还会返回借阅的书籍序号；如果单纯是查找，mode=0
     {
-        vector<pair<Book, int>> candidate; //这个vector用于保存符合条件的书籍
+        vector<pair<Book, int> > candidate; //这个vector用于保存符合条件的书籍
         for (int i = 0; i < bookList.size(); i++)
         {
             if (bookList[i].author == target && !bookList[i].deleted)
@@ -140,7 +140,7 @@ public:
     }
     int searchCategory(string target, bool mode) //根据类别的搜索功能。
     {
-        vector<pair<Book, int>> candidate;
+        vector<pair<Book, int> > candidate;
         for (int i = 0; i < bookList.size(); i++)
         {
             if (kmp(target, bookList[i].category) && !bookList[i].deleted)

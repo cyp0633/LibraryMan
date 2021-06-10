@@ -8,7 +8,7 @@
 #include "Repo.h"
 #include "Student.h"
 #include "Account.h"
-#include "error.h"
+#include "Error.h"
 using namespace std;
 class student;
 class admin;
